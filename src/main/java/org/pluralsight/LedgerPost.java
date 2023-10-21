@@ -9,11 +9,28 @@ public class LedgerPost {
     private String vendor;
     private double amount;
 
-    public LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
-        this.timeStamp = timeStamp;
+    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
+                      String description, String vendor, double amount) {
+        this.timeStamp = LocalDateTime.of(year, month, day, hour, minute, second);
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+    }
+
+    public static void main(String[] args) {
+        LedgerPost p = new LedgerPost(2023, 4, 12, 12, 12, 5, "ergonamic keyboard",
+                "Amazon", -89.5);
+        System.out.println(p);
+    }
+
+    public String toCSVFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getDate() + "|");
+        sb.append(getTime() + "|");
+        sb.append(getDescription() + "|");
+        sb.append(getVendor() + "|");
+        sb.append(getAmount());
+        return sb.toString();
     }
 
     /*-----Getters-----*/
@@ -44,12 +61,6 @@ public class LedgerPost {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getDate() + "|");
-        sb.append(getTime() + "|");
-        sb.append(getDescription() + "|");
-        sb.append(getVendor() + "|");
-        sb.append(getAmount());
-        return sb.toString();
+        return String.format("%10s @ %8s | %-25s | %-10s | $%.2f", getDate(), getTime(), getDescription(), getVendor(), getAmount());
     }
 }

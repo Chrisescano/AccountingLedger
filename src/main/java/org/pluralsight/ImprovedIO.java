@@ -18,9 +18,7 @@ public class ImprovedIO {
     }
 
     public static char getCharInput() {
-        char input = scanner.next().toUpperCase().charAt(0);
-        scanner.nextLine();
-        return input;
+        return getWordOfInput().toUpperCase().charAt(0);
     }
 
     public static int getIntInput() {
@@ -37,6 +35,12 @@ public class ImprovedIO {
         }
         return input;
     }
+
+    public static void getDateInput() {
+
+    }
+
+    /*-----File Read/Write-----*/
 
     public static String readFromFile(String fileName) {
         String file = "";
@@ -62,6 +66,13 @@ public class ImprovedIO {
         } catch(IOException e) {
             System.out.println("Oops, looks like I could not write to this file: " + fileName);
             e.printStackTrace();
+        }
+    }
+
+    /*-----Custom Exception Class----*/
+    private class DateFormatException extends RuntimeException {
+        public DateFormatException(String errorMessage, Throwable err) {
+            super(errorMessage, err);
         }
     }
 }
