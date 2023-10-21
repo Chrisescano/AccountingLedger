@@ -3,17 +3,24 @@ package org.pluralsight;
 import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImprovedIO {
     private static Scanner scanner = new Scanner(System.in);
-    private static boolean isPostDateNow = true;
+    private static boolean canTimeInputBeAnything = true;
 
     //testing purposes - remove when not needed
     public static void main(String[] args) {
-        getTimeInput();
+        System.out.println("Put in a date");
+        LocalDate dateInput = getDateInput();
+        System.out.println("Put in a time");
+        LocalTime timeInput = getTimeInput();
+
+        LocalDateTime dateTime = dateInput.atTime(timeInput);
+        System.out.println("The date is: " + dateTime);
     }
 
     /*-----I/O Methods-----*/
@@ -46,12 +53,14 @@ public class ImprovedIO {
         return input;
     }
 
-    public static void getDateInput() {
+    public static LocalDate getDateInput() {
         while(true) {
-            String dateInput = getWordOfInput();
+            String userInput = getWordOfInput();
             try {
-                LocalDate checkedDateInput = checkDateFormat(dateInput);
-                break;
+                LocalDate dateInput = checkDateFormat(userInput);
+                canTimeInputBeAnything = dateInput.isBefore(LocalDate.now());
+
+                return dateInput;
             } catch (IllegalDateTimeFormatException e) {
                 System.out.println(e.getMessage());
             } catch (DateTimeException e) {
@@ -62,12 +71,20 @@ public class ImprovedIO {
         }
     }
 
-    public static void getTimeInput() {
+    public static LocalTime getTimeInput() {
         while(true) {
-            String timeInput = getWordOfInput();
+            String userInput = getWordOfInput();
             try {
-                LocalTime checkedTimeInput = checkTimeFormat(timeInput);
-                break;
+                LocalTime timeInput = checkTimeFormat(userInput);
+                if(canTimeInputBeAnything) return timeInput;
+                if(LocalTime.now().isBefore(timeInput)) {
+                    throw new IllegalDateTimeFormatException(
+                            "Oops, cannot post a future transaction to the ledger. Please try again"
+                    );
+                }
+
+                canTimeInputBeAnything = false;
+                return timeInput;
             } catch(IllegalDateTimeFormatException e) {
                 System.out.println(e.getMessage());
             } catch(DateTimeException e) {
