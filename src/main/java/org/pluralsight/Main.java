@@ -8,30 +8,25 @@ public class Main {
     static Ledger ledger = new Ledger();
     public static void main(String[] args) {
         System.out.println("Welcome to your accounting ledger!");
-        //homeScreenPrompt();
-        //ledgerScreenPrompt();
-        //reportsScreenPrompt();
-        //customSearchPrompt();
-
-        addDeposit();
+        homeScreenPrompt();
     }
 
     /*-----Main Command Menus-----*/
 
     public static void homeScreenPrompt() {
         while(true) {
-            System.out.print("Here are the commands you can do:\n  (D) - Add a deposit\n  (P) - Make a payment\n" +
+            System.out.print("\nHere are the commands you can do:\n  (D) - Add a deposit\n  (P) - Make a payment\n" +
                     "  (L) - View your ledger\n  (X) - Exit from the program\nType in your command: ");
             char command = ImprovedIO.getCharInput();
             switch(command) {
                 case 'D':
-                    System.out.println("You want to add a deposit");
+                    addDeposit();
                     break;
                 case 'P':
-                    System.out.println("You want to make a payment");
+                    makePayment();
                     break;
                 case 'L':
-                    System.out.println("You want to view your ledger");
+                    ledgerScreenPrompt();
                     break;
                 case 'X':
                     System.out.println("You want to exit from the program");
@@ -44,13 +39,14 @@ public class Main {
 
     public static void ledgerScreenPrompt() {
         while(true) {
-            System.out.print("Here are the commands you can do:\n  (A) - Display all entries\n" +
+            System.out.print("\nHere are the commands you can do:\n  (A) - Display all ledger posts\n" +
                     "  (D) - Display only deposits\n  (P) - Display only payments\n  (R) - Filter ledger by defined values\n" +
                     "  (H) - Go back to the home menu\nType in your command: ");
             char command = ImprovedIO.getCharInput();
             switch(command) {
                 case 'A':
-                    System.out.println("You want to display all entries");
+                    System.out.println("Fetching all ledger posts...\n");
+                    ledger.displayAllLedgerPosts();
                     break;
                 case 'D':
                     System.out.println("Display only deposits");
@@ -135,8 +131,9 @@ public class Main {
     /*-----Sub Menus-----*/
 
     public static void addDeposit() {
-        System.out.println("To make a deposit please provide the following information: ");
+        System.out.println("\nTo post a deposit please provide the following information: ");
 
+        //add functionality to fetch current localDateTime with enter key
         System.out.print("Date of deposit in YYYY-MM-DD format(enter key = today's date): ");
         LocalDate dateInput = ImprovedIO.getDateInput();
 
@@ -152,6 +149,30 @@ public class Main {
 
         System.out.print("Amount of deposit: ");
         double amountInput = ImprovedIO.getDoubleInput();
+
+        ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
+    }
+
+    public static void makePayment() {
+        System.out.println("\nTo post a payment please provide the following information: ");
+
+        System.out.print("Date of payment in YYYY-MM-DD format(enter key = today's date): ");
+        LocalDate dateInput = ImprovedIO.getDateInput();
+
+        //add functionality to fetch current localDateTime with enter key
+        System.out.print("Time of payment(enter key = current time): ");
+        LocalTime timeInput = ImprovedIO.getTimeInput();
+        LocalDateTime localDateTime = dateInput.atTime(timeInput);
+
+        System.out.print("Description of the payment: ");
+        String descriptionInput = ImprovedIO.getLineOfInput();
+
+        System.out.print("Payment made to which vendor: ");
+        String vendorInput = ImprovedIO.getLineOfInput();
+
+        System.out.print("Amount of payment: ");
+        double amountInput = ImprovedIO.getDoubleInput();
+        if(amountInput > 0) amountInput *= -1;
 
         ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
     }
