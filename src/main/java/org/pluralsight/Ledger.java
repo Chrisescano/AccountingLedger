@@ -1,5 +1,6 @@
 package org.pluralsight;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
@@ -9,8 +10,7 @@ public class Ledger {
         ledger = new ArrayList<>();
     }
 
-    public void postToLedger(int year, int month, int day, int hour, int minute, int second,
-                             String description, String vendor, double amount) {
-        ledger.add(new LedgerPost(year, month, day, hour, minute, second, description, vendor, amount));
+    public void postToLedger(LocalDateTime timeStamp, String description, String vendor, double amount) {
+        ledger.add(new LedgerPost(timeStamp, description, vendor, amount));
     }
 }

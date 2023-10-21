@@ -3,25 +3,13 @@ package org.pluralsight;
 import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImprovedIO {
     private static Scanner scanner = new Scanner(System.in);
-    private static boolean canTimeInputBeAnything = true;
-
-    //testing purposes - remove when not needed
-    public static void main(String[] args) {
-        System.out.println("Put in a date");
-        LocalDate dateInput = getDateInput();
-        System.out.println("Put in a time");
-        LocalTime timeInput = getTimeInput();
-
-        LocalDateTime dateTime = dateInput.atTime(timeInput);
-        System.out.println("The date is: " + dateTime);
-    }
+    private static boolean canTimeInputBeAnything = false;
 
     /*-----I/O Methods-----*/
 
@@ -40,13 +28,27 @@ public class ImprovedIO {
     }
 
     public static int getIntInput() {
-        int input = 0;
+        int input;
         while(true) {
             try {
                 input = scanner.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("Oops, I was expecting an integer value. Please try again");
+                System.out.println("Oops, expecting an integer value. Please try again");
+                scanner.nextLine();
+            }
+        }
+        return input;
+    }
+
+    public static double getDoubleInput() {
+        double input;
+        while(true) {
+            try {
+                input = scanner.nextDouble();
+                break;
+            } catch(InputMismatchException e) {
+                System.out.println("Oops, expecting an decimal value. Please try again");
                 scanner.nextLine();
             }
         }
@@ -58,6 +60,11 @@ public class ImprovedIO {
             String userInput = getWordOfInput();
             try {
                 LocalDate dateInput = checkDateFormat(userInput);
+                if(dateInput.isAfter(LocalDate.now())) {
+                    throw new IllegalDateTimeFormatException(
+                            "Oops, cannot post a future transaction to the ledger. Please try again"
+                    );
+                }
                 canTimeInputBeAnything = dateInput.isBefore(LocalDate.now());
 
                 return dateInput;
@@ -69,6 +76,11 @@ public class ImprovedIO {
                 System.out.println("Oops, a part of the date is not a number. Please try again");
             }
         }
+    }
+
+    public static LocalDate getDateNow() {
+        canTimeInputBeAnything = false;
+        return LocalDate.now();
     }
 
     public static LocalTime getTimeInput() {
@@ -93,6 +105,10 @@ public class ImprovedIO {
                 System.out.println("Oops, a part of the time is not a number. Please try again");
             }
         }
+    }
+
+    public static LocalTime getTimeNow() {
+        return LocalTime.now();
     }
 
     /*-----File Read/Write-----*/

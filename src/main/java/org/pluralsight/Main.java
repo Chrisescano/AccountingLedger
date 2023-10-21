@@ -2,8 +2,10 @@ package org.pluralsight;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Main {
+    static Ledger ledger = new Ledger();
     public static void main(String[] args) {
         System.out.println("Welcome to your accounting ledger!");
         //homeScreenPrompt();
@@ -11,8 +13,10 @@ public class Main {
         //reportsScreenPrompt();
         //customSearchPrompt();
 
-        //can call LocalTime atDate(LocalDate) method to return a LocalDateTime object
+        addDeposit();
     }
+
+    /*-----Main Command Menus-----*/
 
     public static void homeScreenPrompt() {
         while(true) {
@@ -126,5 +130,29 @@ public class Main {
                     System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
+    }
+
+    /*-----Sub Menus-----*/
+
+    public static void addDeposit() {
+        System.out.println("To make a deposit please provide the following information: ");
+
+        System.out.print("Date of deposit in YYYY-MM-DD format(enter key = today's date): ");
+        LocalDate dateInput = ImprovedIO.getDateInput();
+
+        System.out.print("Time of deposit(enter key = current time): ");
+        LocalTime timeInput = ImprovedIO.getTimeInput();
+        LocalDateTime localDateTime = dateInput.atTime(timeInput);
+
+        System.out.print("Description of the deposit: ");
+        String descriptionInput = ImprovedIO.getLineOfInput();
+
+        System.out.print("Vendor who provided deposit: ");
+        String vendorInput = ImprovedIO.getLineOfInput();
+
+        System.out.print("Amount of deposit: ");
+        double amountInput = ImprovedIO.getDoubleInput();
+
+        ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
     }
 }
