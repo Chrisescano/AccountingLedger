@@ -1,11 +1,21 @@
 package org.pluralsight;
 
 import java.io.*;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class ImprovedIO {
     private static Scanner scanner = new Scanner(System.in);
+
+    //testing purposes - remove when not needed
+    public static void main(String[] args) {
+        getDateInput();
+    }
+
+    /*-----I/O Methods-----*/
 
     public static String getLineOfInput() {
         return scanner.nextLine();
@@ -30,13 +40,23 @@ public class ImprovedIO {
             } catch (InputMismatchException e) {
                 System.out.println("Oops, I was expecting an integer value. Please try again");
                 scanner.nextLine();
-                //e.printStackTrace(); //testing purposes
             }
         }
         return input;
     }
 
     public static void getDateInput() {
+        String dateInput = getWordOfInput();
+        try {
+            LocalDate checkedDateInput = checkDateFormat(dateInput);
+            System.out.println(checkedDateInput);
+        } catch (IllegalDateFormatException e) {
+            System.out.println(e.getMessage());
+        } catch (DateTimeException e) {
+            System.out.println("Oops, the date is out of range. Please try again");
+        } catch (NumberFormatException e) {
+            System.out.println("Oops, a part of the date is not a number. Please try again");
+        }
 
     }
 
@@ -69,10 +89,43 @@ public class ImprovedIO {
         }
     }
 
-    /*-----Custom Exception Class----*/
-    private class DateFormatException extends RuntimeException {
-        public DateFormatException(String errorMessage, Throwable err) {
-            super(errorMessage, err);
+    /*-----Private Methods-----*/
+    private static LocalDate checkDateFormat(String date) throws DateTimeException, NumberFormatException, IllegalDateFormatException {
+        //checks for '-' chars
+        if(!date.contains("-")) {
+            throw new IllegalDateFormatException(
+                    "The input:" + date + " is missing the '-' delimiters. The correct format is yyyy-mm-dd. Please try again."
+            );
+        }
+
+        //checks if there are three sections: year, month, and date
+        String[] tokens = date.split("-");
+        if(tokens.length != 3) {
+            throw new IllegalDateFormatException(
+                    "The input:" + date + " is in the incorrect format. The correct format is yyyy-mm-dd. Please try again."
+            );
+        }
+
+        //will throw exception if any date fields out of range, or if non-integer is typed in
+        LocalDate dateInput = LocalDate.of(
+                Integer.parseInt(tokens[0]),
+                Integer.parseInt(tokens[1]),
+                Integer.parseInt(tokens[2])
+        );
+        LocalDate dateNow = LocalDate.now();
+
+        if(dateNow.isBefore(dateInput)) {
+            throw new IllegalDateFormatException(
+                    "Oops, you cannot post any future transactions. Please try again."
+            );
+        }
+        return dateInput;
+    }
+
+    /*-----Custom Exception Class*/
+    private static class IllegalDateFormatException extends Exception {
+        public IllegalDateFormatException(String message) {
+            super(message);
         }
     }
 }
