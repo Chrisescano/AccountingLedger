@@ -9,12 +9,16 @@ public class LedgerPost {
     private String vendor;
     private double amount;
 
-    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
-                      String description, String vendor, double amount) {
-        this.timeStamp = LocalDateTime.of(year, month, day, hour, minute, second);
+
+    public LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
+        this.timeStamp = timeStamp;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+    }
+    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
+                      String description, String vendor, double amount) {
+        this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
     }
 
     public static void main(String[] args) {
