@@ -3,7 +3,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to your accounting ledger!");
         //homeScreenPrompt();
-        ledgerScreenPrompt();
+        //ledgerScreenPrompt();
+        reportsScreenPrompt();
     }
 
     public static void homeScreenPrompt() {
@@ -34,7 +35,7 @@ public class Main {
         while(true) {
             System.out.print("Here are the commands you can do:\n  (A) - Display all entries\n" +
                     "  (D) - Display only deposits\n  (P) - Display only payments\n  (R) - Filter ledger by defined values\n" +
-                    "  (H) - Go back to the home menu\nType command: ");
+                    "  (H) - Go back to the home menu\nType in your command: ");
             char command = ImprovedIO.getCharInput();
             switch(command) {
                 case 'A':
@@ -48,6 +49,40 @@ public class Main {
                     break;
                 case 'R':
                     System.out.println("You want to filter the ledger by defined values");
+                    break;
+                case 'H':
+                    System.out.println("You want to go back to the home menu");
+                    return;
+                default:
+                    System.out.println("Sorry, that is not a valid command. Please try again");
+            }
+        }
+    }
+
+    public static void reportsScreenPrompt() {
+        while(true) {
+            System.out.print("Here are the commands you can do:\n  1. Month to Date\n  2. Previous Month\n" +
+                    "  3. Year to Date\n  4. Previous Year\n  5. Search by vendor\n  6. Go back to ledger screen\n" +
+                    "Type in your command: ");
+            int command = ImprovedIO.getIntInput();
+            switch(command) {
+                case 1:
+                    System.out.println("You want to filter by month to date");
+                    break;
+                case 2:
+                    System.out.println("You want to filter by previous month");
+                    break;
+                case 3:
+                    System.out.println("Ypu want to filter by year to date");
+                    break;
+                case 4:
+                    System.out.println("You want to filter by previous year");
+                    break;
+                case 5:
+                    System.out.println("You want to filter by vendor");
+                    break;
+                case 6:
+                    System.out.println("You want to go back to the ledger screen");
                     break;
                 default:
                     System.out.println("Sorry, that is not a valid command. Please try again");
