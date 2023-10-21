@@ -30,7 +30,7 @@ public class ImprovedIO {
                 input = scanner.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("Oops, I was expecting an integer value, you typed: "+ input +" Please try again");
+                System.out.println("Oops, I was expecting an integer value. Please try again");
                 scanner.nextLine();
                 //e.printStackTrace(); //testing purposes
             }

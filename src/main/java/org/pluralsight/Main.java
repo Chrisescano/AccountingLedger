@@ -4,7 +4,8 @@ public class Main {
         System.out.println("Welcome to your accounting ledger!");
         //homeScreenPrompt();
         //ledgerScreenPrompt();
-        reportsScreenPrompt();
+        //reportsScreenPrompt();
+        customSearchPrompt();
     }
 
     public static void homeScreenPrompt() {
@@ -80,6 +81,37 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("You want to filter by vendor");
+                    break;
+                case 6:
+                    System.out.println("You want to go back to the ledger screen");
+                    return;
+                default:
+                    System.out.println("Sorry, that is not a valid command. Please try again");
+            }
+        }
+    }
+
+    private static void customSearchPrompt() {
+        while(true) {
+            System.out.print("Here are the commands you can do:\n  1. Search by start date\n  2. Search by end date\n" +
+                    "  3. Search by description\n  4. Search by vendor\n  5. Search by amount\n" +
+                    "  6. Go back to the ledger screen menu\nType in your command: ");
+            int command = ImprovedIO.getIntInput();
+            switch(command) {
+                case 1:
+                    System.out.println("You want to filter by start date");
+                    break;
+                case 2:
+                    System.out.println("You want to filter by end date");
+                    break;
+                case 3:
+                    System.out.println("You want to filter by description");
+                    break;
+                case 4:
+                    System.out.println("You want to filter by vendor");
+                    break;
+                case 5:
+                    System.out.println("You want to filter by amount");
                     break;
                 case 6:
                     System.out.println("You want to go back to the ledger screen");
