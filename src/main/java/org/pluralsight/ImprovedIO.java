@@ -6,14 +6,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
 public class ImprovedIO {
     private static Scanner scanner = new Scanner(System.in);
+    private static boolean isPostDateNow = true;
 
     //testing purposes - remove when not needed
     public static void main(String[] args) {
-        getDateInput();
+        getTimeInput();
     }
 
     /*-----I/O Methods-----*/
@@ -125,18 +125,11 @@ public class ImprovedIO {
         }
 
         //will throw exception if any date fields out of range, or if non-integer is typed in
-        LocalDate dateInput = LocalDate.of(
+        return LocalDate.of(
                 Integer.parseInt(tokens[0]),
                 Integer.parseInt(tokens[1]),
                 Integer.parseInt(tokens[2])
         );
-        LocalDate dateNow = LocalDate.now();
-        if(dateNow.isBefore(dateInput)) {
-            throw new IllegalDateTimeFormatException(
-                    "Oops, you cannot post any future transactions. Please try again."
-            );
-        }
-        return dateInput;
     }
 
     private static LocalTime checkTimeFormat(String time) throws DateTimeException, NumberFormatException, IllegalDateTimeFormatException {
@@ -154,21 +147,11 @@ public class ImprovedIO {
         }
 
         //will throw exception if time fields out or range, or if non-integer is typed in
-        LocalTime timeInput = LocalTime.of(
+        return LocalTime.of(
                 Integer.parseInt(tokens[0]),
                 Integer.parseInt(tokens[1]),
                 Integer.parseInt(tokens[2])
         );
-        LocalTime timeNow = LocalTime.now();
-
-        //Bug: if the date is in the past then the time is irrelevant. Need to check if date put in
-        //is current date or not
-        if(timeNow.isBefore(timeInput)) {
-            throw new IllegalDateTimeFormatException(
-                    "Oops, you cannot post future transactions. Please try again."
-            );
-        }
-        return timeInput;
     }
 
     /*-----Custom Exception Class*/
