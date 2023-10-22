@@ -12,8 +12,8 @@ public class ImprovedIO {
     private static boolean canTimeInputBeAnything = false;
 
     public static void main(String[] args) {
-        LocalDate d = getDateInput();
-        System.out.println(d);
+        LocalTime t = getTimeInput();
+        System.out.println(t);
     }
 
     /*-----I/O Methods-----*/
@@ -92,7 +92,7 @@ public class ImprovedIO {
 
     public static LocalTime getTimeInput() {
         while(true) {
-            String userInput = getWordOfInput();
+            String userInput = getLineOfInput();
             if(userInput.equals("")) return getTimeNow();
 
             try {
@@ -143,6 +143,7 @@ public class ImprovedIO {
             for(int i = 0; i < file.length; i++) {
                 bufferedWriter.write(file[i]);
             }
+            bufferedWriter.close();
         } catch(IOException e) {
             System.out.println("Oops, looks like I could not write to this file: " + fileName);
             e.printStackTrace();

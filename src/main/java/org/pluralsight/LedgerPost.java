@@ -9,7 +9,6 @@ public class LedgerPost {
     private String vendor;
     private double amount;
 
-
     public LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
         this.timeStamp = timeStamp;
         this.description = description;
@@ -21,14 +20,10 @@ public class LedgerPost {
         this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
     }
 
-    public String toCSVFormat() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getDate() + "|");
-        sb.append(getTime() + "|");
-        sb.append(getDescription() + "|");
-        sb.append(getVendor() + "|");
-        sb.append(getAmount());
-        return sb.toString();
+    public String toTableFormat(String format) {
+        return String.format(
+                format, getDate(), getTime(), getDescription(), getVendor(), getAmount()
+        );
     }
 
     /*-----Getters-----*/
@@ -59,9 +54,12 @@ public class LedgerPost {
 
     @Override
     public String toString() {
-        return String.format(
-                "%10s @ %8s | %-30.30s | %-15.15s | $%.2f",
-                getDate(), getTime(), getDescription(), getVendor(), getAmount()
-        );
+        StringBuilder sb = new StringBuilder();
+        sb.append(getDate() + "|");
+        sb.append(getTime() + "|");
+        sb.append(getDescription() + "|");
+        sb.append(getVendor() + "|");
+        sb.append(getAmount());
+        return sb.toString();
     }
 }

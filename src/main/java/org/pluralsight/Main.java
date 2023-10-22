@@ -8,8 +8,8 @@ public class Main {
     static Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to your accounting ledger!");
-        homeScreenPrompt();
+//        System.out.println("Welcome to your accounting ledger!");
+//        homeScreenPrompt();
     }
 
     /*-----Main Command Menus-----*/
@@ -53,7 +53,7 @@ public class Main {
             switch (command) {
                 case 'A' -> {
                     System.out.println("Fetching all ledger posts...\n");
-                    ledger.displayAllLedgerPosts();
+                    ledger.displayLedgerAsTable();
                 }
                 case 'D' -> System.out.println("Display only deposits");
                 case 'P' -> System.out.println("Display only payments");
