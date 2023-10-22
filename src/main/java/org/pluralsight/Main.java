@@ -8,8 +8,8 @@ public class Main {
     static Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-//        System.out.println("Welcome to your accounting ledger!");
-//        homeScreenPrompt();
+        System.out.println("Welcome to your accounting ledger!");
+        homeScreenPrompt();
     }
 
     /*-----Main Command Menus-----*/
@@ -18,6 +18,7 @@ public class Main {
         while(true) {
             System.out.print("""
 
+                    Currently in: Home Screen Menu
                     Here are the commands you can do:
                       (D) - Add a deposit
                       (P) - Make a payment
@@ -42,26 +43,30 @@ public class Main {
         while(true) {
             System.out.print("""
 
+                    Currently in: Ledger Screen Menu
                     Here are the commands you can do:
                       (A) - Display all ledger posts
                       (D) - Display only deposits
                       (P) - Display only payments
-                      (R) - Filter ledger by defined values
+                      (R) - Filter ledger by pre-defined values
                       (H) - Go back to the home menu
                     Type in your command:\s""");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'A' -> {
-                    System.out.println("Fetching all ledger posts...\n");
+                    System.out.println("\nFetching all ledger posts...");
                     ledger.displayLedgerAsTable();
                 }
-                case 'D' -> System.out.println("Display only deposits");
-                case 'P' -> System.out.println("Display only payments");
-                case 'R' -> System.out.println("You want to filter the ledger by defined values");
-                case 'H' -> {
-                    System.out.println("You want to go back to the home menu");
-                    return;
+                case 'D' -> {
+                    System.out.println("\nFetching all deposits...");
+                    ledger.displayDepositsOnly();
                 }
+                case 'P' -> {
+                    System.out.println("\nFetching all payments...");
+                    ledger.displayPaymentsOnly();
+                }
+                case 'R' -> reportsScreenPrompt();
+                case 'H' -> {return;}
                 default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
@@ -71,13 +76,14 @@ public class Main {
         while(true) {
             System.out.print("""
                     
+                    Currently in: Predefined Filter Menu
                     Here are the commands you can do:
-                      1. Month to Date
-                      2. Previous Month
-                      3. Year to Date
-                      4. Previous Year
-                      5. Search by vendor
-                      6. Go back to ledger screen
+                      (1) Month to Date
+                      (2) Previous Month
+                      (3) Year to Date
+                      (4) Previous Year
+                      (5) Search by vendor
+                      (6) Go back to ledger screen
                     Type in your command:\s""");
             int command = ImprovedIO.getIntInput();
             switch (command) {
@@ -160,10 +166,10 @@ public class Main {
         return ImprovedIO.getLineOfInput();
     }
 
-    public static String promptWordInput(String prompt) {
-        System.out.print(prompt);
-        return ImprovedIO.getWordOfInput();
-    }
+//    public static String promptWordInput(String prompt) {
+//        System.out.print(prompt);
+//        return ImprovedIO.getWordOfInput();
+//    }
 
     public static double promptDoubleInput(String prompt) {
         System.out.print(prompt);

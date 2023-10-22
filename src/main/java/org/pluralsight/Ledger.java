@@ -41,4 +41,10 @@ public class Ledger {
         tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() < 0);
         displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
     }
+
+    public void displayPaymentsOnly() {
+        ArrayList<LedgerPost> tmpLedger = ledger;
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() > 0);
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
 }

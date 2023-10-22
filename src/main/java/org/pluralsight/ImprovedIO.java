@@ -128,7 +128,7 @@ public class ImprovedIO {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String fileLine;
             while ((fileLine = bufferedReader.readLine()) != null) {
-                file += fileLine;
+                file = file.concat(fileLine);
             }
         } catch(IOException e) {
             System.out.println("Oops, looks like I could not read from the file: " + fileName);
@@ -140,8 +140,8 @@ public class ImprovedIO {
     public static void writeToFile(String fileName, String[] file) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-            for(int i = 0; i < file.length; i++) {
-                bufferedWriter.write(file[i]);
+            for (String fileLine : file) {
+                bufferedWriter.write(fileLine);
             }
             bufferedWriter.close();
         } catch(IOException e) {

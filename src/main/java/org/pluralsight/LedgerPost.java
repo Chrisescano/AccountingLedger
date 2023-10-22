@@ -15,10 +15,10 @@ public class LedgerPost {
         this.vendor = vendor;
         this.amount = amount;
     }
-    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
-                      String description, String vendor, double amount) {
-        this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
-    }
+//    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
+//                      String description, String vendor, double amount) {
+//        this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
+//    }
 
     public String toTableFormat(String format) {
         return String.format(
@@ -54,12 +54,10 @@ public class LedgerPost {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getDate() + "|");
-        sb.append(getTime() + "|");
-        sb.append(getDescription() + "|");
-        sb.append(getVendor() + "|");
-        sb.append(getAmount());
-        return sb.toString();
+        return getDate() + "|" +
+               getTime() + "|" +
+               getDescription() + "|" +
+               getVendor() + "|" +
+               getAmount();
     }
 }
