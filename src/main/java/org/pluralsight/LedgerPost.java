@@ -59,6 +59,9 @@ public class LedgerPost {
 
     @Override
     public String toString() {
-        return String.format("%10s @ %8s | %-25s | %-10s | $%.2f", getDate(), getTime(), getDescription(), getVendor(), getAmount());
+        return String.format(
+                "%10s @ %8s | %-30.30s | %-15.15s | $%.2f",
+                getDate(), getTime(), getDescription(), getVendor(), getAmount()
+        );
     }
 }

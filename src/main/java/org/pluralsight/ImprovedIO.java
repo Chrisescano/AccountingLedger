@@ -11,6 +11,11 @@ public class ImprovedIO {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean canTimeInputBeAnything = false;
 
+    public static void main(String[] args) {
+        LocalDate d = getDateInput();
+        System.out.println(d);
+    }
+
     /*-----I/O Methods-----*/
 
     public static String getLineOfInput() {
@@ -57,7 +62,9 @@ public class ImprovedIO {
 
     public static LocalDate getDateInput() {
         while(true) {
-            String userInput = getWordOfInput();
+            String userInput = getLineOfInput();
+            if(userInput.equals("")) return getDateNow();
+
             try {
                 LocalDate dateInput = checkDateFormat(userInput);
                 if(dateInput.isAfter(LocalDate.now())) {
@@ -86,6 +93,8 @@ public class ImprovedIO {
     public static LocalTime getTimeInput() {
         while(true) {
             String userInput = getWordOfInput();
+            if(userInput.equals("")) return getTimeNow();
+
             try {
                 LocalTime timeInput = checkTimeFormat(userInput);
                 if(canTimeInputBeAnything) return timeInput;
@@ -145,7 +154,7 @@ public class ImprovedIO {
         //checks for '-' chars
         if(!date.contains("-")) {
             throw new IllegalDateTimeFormatException(
-                    "The input:" + date + " is missing the '-' delimiters. The correct format is YYYY-MM-DD. Please try again."
+                    "The input \"" + date + "\" is missing the '-' delimiters. The correct format is YYYY-MM-DD. Please try again."
             );
         }
 
@@ -153,7 +162,7 @@ public class ImprovedIO {
         String[] tokens = date.split("-");
         if(tokens.length != 3) {
             throw new IllegalDateTimeFormatException(
-                    "The input:" + date + " is in the incorrect format. The correct format is YYYY-MM-DD. Please try again."
+                    "The input \"" + date + "\" is in the incorrect format. The correct format is YYYY-MM-DD. Please try again."
             );
         }
 
@@ -168,14 +177,14 @@ public class ImprovedIO {
     private static LocalTime checkTimeFormat(String time) throws DateTimeException, NumberFormatException, IllegalDateTimeFormatException {
         if(!time.contains(":")) {       //checks for ':' chars
             throw new IllegalDateTimeFormatException(
-                    "The input:" + time + " is missing the ':' delimiters. The correct format is HH-MM-SS. Please try again"
+                    "The input \"" + time + "\" is missing the ':' delimiters. The correct format is HH-MM-SS. Please try again"
             );
         }
 
         String[] tokens = time.split(":");
         if(tokens.length != 3) {        //checks if there are three sections: hour, minutes, seconds
             throw new IllegalDateTimeFormatException(
-                    "The input:" + time + " is in the incorrect format. The correct format is HH-MM-SS. Please try again"
+                    "The input \"" + time + "\" is in the incorrect format. The correct format is HH-MM-SS. Please try again"
             );
         }
 
