@@ -6,6 +6,7 @@ import java.time.LocalTime;
 
 public class Main {
     static Ledger ledger = new Ledger();
+
     public static void main(String[] args) {
         System.out.println("Welcome to your accounting ledger!");
         homeScreenPrompt();
@@ -15,115 +16,106 @@ public class Main {
 
     public static void homeScreenPrompt() {
         while(true) {
-            System.out.print("\nHere are the commands you can do:\n  (D) - Add a deposit\n  (P) - Make a payment\n" +
-                    "  (L) - View your ledger\n  (X) - Exit from the program\nType in your command: ");
+            System.out.print("""
+
+                    Here are the commands you can do:
+                      (D) - Add a deposit
+                      (P) - Make a payment
+                      (L) - View your ledger
+                      (X) - Exit from the program
+                    Type in your command:\s""");
             char command = ImprovedIO.getCharInput();
-            switch(command) {
-                case 'D':
-                    addDeposit();
-                    break;
-                case 'P':
-                    makePayment();
-                    break;
-                case 'L':
-                    ledgerScreenPrompt();
-                    break;
-                case 'X':
+            switch (command) {
+                case 'D' -> addDeposit();
+                case 'P' -> makePayment();
+                case 'L' -> ledgerScreenPrompt();
+                case 'X' -> {
                     System.out.println("You want to exit from the program");
                     return;
-                default:
-                    System.out.println("Sorry, that is not a valid command. Please try again");
+                }
+                default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
     }
 
     public static void ledgerScreenPrompt() {
         while(true) {
-            System.out.print("\nHere are the commands you can do:\n  (A) - Display all ledger posts\n" +
-                    "  (D) - Display only deposits\n  (P) - Display only payments\n  (R) - Filter ledger by defined values\n" +
-                    "  (H) - Go back to the home menu\nType in your command: ");
+            System.out.print("""
+
+                    Here are the commands you can do:
+                      (A) - Display all ledger posts
+                      (D) - Display only deposits
+                      (P) - Display only payments
+                      (R) - Filter ledger by defined values
+                      (H) - Go back to the home menu
+                    Type in your command:\s""");
             char command = ImprovedIO.getCharInput();
-            switch(command) {
-                case 'A':
+            switch (command) {
+                case 'A' -> {
                     System.out.println("Fetching all ledger posts...\n");
                     ledger.displayAllLedgerPosts();
-                    break;
-                case 'D':
-                    System.out.println("Display only deposits");
-                    break;
-                case 'P':
-                    System.out.println("Display only payments");
-                    break;
-                case 'R':
-                    System.out.println("You want to filter the ledger by defined values");
-                    break;
-                case 'H':
+                }
+                case 'D' -> System.out.println("Display only deposits");
+                case 'P' -> System.out.println("Display only payments");
+                case 'R' -> System.out.println("You want to filter the ledger by defined values");
+                case 'H' -> {
                     System.out.println("You want to go back to the home menu");
                     return;
-                default:
-                    System.out.println("Sorry, that is not a valid command. Please try again");
+                }
+                default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
     }
 
     public static void reportsScreenPrompt() {
         while(true) {
-            System.out.print("Here are the commands you can do:\n  1. Month to Date\n  2. Previous Month\n" +
-                    "  3. Year to Date\n  4. Previous Year\n  5. Search by vendor\n  6. Go back to ledger screen\n" +
-                    "Type in your command: ");
+            System.out.print("""
+                    
+                    Here are the commands you can do:
+                      1. Month to Date
+                      2. Previous Month
+                      3. Year to Date
+                      4. Previous Year
+                      5. Search by vendor
+                      6. Go back to ledger screen
+                    Type in your command:\s""");
             int command = ImprovedIO.getIntInput();
-            switch(command) {
-                case 1:
-                    System.out.println("You want to filter by month to date");
-                    break;
-                case 2:
-                    System.out.println("You want to filter by previous month");
-                    break;
-                case 3:
-                    System.out.println("Ypu want to filter by year to date");
-                    break;
-                case 4:
-                    System.out.println("You want to filter by previous year");
-                    break;
-                case 5:
-                    System.out.println("You want to filter by vendor");
-                    break;
-                case 6:
+            switch (command) {
+                case 1 -> System.out.println("You want to filter by month to date");
+                case 2 -> System.out.println("You want to filter by previous month");
+                case 3 -> System.out.println("Ypu want to filter by year to date");
+                case 4 -> System.out.println("You want to filter by previous year");
+                case 5 -> System.out.println("You want to filter by vendor");
+                case 6 -> {
                     System.out.println("You want to go back to the ledger screen");
                     return;
-                default:
-                    System.out.println("Sorry, that is not a valid command. Please try again");
+                }
+                default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
     }
 
     private static void customSearchPrompt() {
         while(true) {
-            System.out.print("Here are the commands you can do:\n  1. Search by start date\n  2. Search by end date\n" +
-                    "  3. Search by description\n  4. Search by vendor\n  5. Search by amount\n" +
-                    "  6. Go back to the ledger screen menu\nType in your command: ");
+            System.out.print("""
+                    
+                    Here are the commands you can do:
+                      1. Search by start date
+                      2. Search by end date
+                      3. Search by description
+                      4. Search by vendor
+                      5. Search by amount
+                      6. Go back to the ledger screen menu
+                    Type in your command:\s""");
             int command = ImprovedIO.getIntInput();
-            switch(command) {
-                case 1:
-                    System.out.println("You want to filter by start date");
-                    break;
-                case 2:
-                    System.out.println("You want to filter by end date");
-                    break;
-                case 3:
-                    System.out.println("You want to filter by description");
-                    break;
-                case 4:
-                    System.out.println("You want to filter by vendor");
-                    break;
-                case 5:
-                    System.out.println("You want to filter by amount");
-                    break;
-                case 6:
-                    System.out.println("You want to go back to the ledger screen");
-                    break;
-                default:
-                    System.out.println("Sorry, that is not a valid command. Please try again");
+            switch (command) {
+                case 1 -> System.out.println("You want to filter by start date");
+                case 2 -> System.out.println("You want to filter by end date");
+                case 3 -> System.out.println("You want to filter by description");
+                case 4 -> System.out.println("You want to filter by vendor");
+                case 5 -> System.out.println("You want to filter by amount");
+                case 6 -> System.out.println("You want to go back to the ledger screen");
+                default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }
     }
@@ -149,8 +141,10 @@ public class Main {
 
         System.out.print("Amount of deposit: ");
         double amountInput = ImprovedIO.getDoubleInput();
+        if(amountInput < 0) amountInput *= -1; //ensures if negative will be positive
 
         ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
+        System.out.println("\nLedger post successfully added");
     }
 
     public static void makePayment() {
@@ -172,8 +166,9 @@ public class Main {
 
         System.out.print("Amount of payment: ");
         double amountInput = ImprovedIO.getDoubleInput();
-        if(amountInput > 0) amountInput *= -1;
+        if(amountInput > 0) amountInput *= -1; //ensures if positive, will be negative
 
         ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
+        System.out.println("\nLedger post successfully added");
     }
 }

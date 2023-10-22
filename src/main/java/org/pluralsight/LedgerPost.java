@@ -21,12 +21,6 @@ public class LedgerPost {
         this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
     }
 
-    public static void main(String[] args) {
-        LedgerPost p = new LedgerPost(2023, 4, 12, 12, 12, 5, "ergonamic keyboard",
-                "Amazon", -89.5);
-        System.out.println(p);
-    }
-
     public String toCSVFormat() {
         StringBuilder sb = new StringBuilder();
         sb.append(getDate() + "|");
