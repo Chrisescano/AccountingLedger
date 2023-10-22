@@ -125,50 +125,58 @@ public class Main {
     public static void addDeposit() {
         System.out.println("\nTo post a deposit please provide the following information: ");
 
-        //add functionality to fetch current localDateTime with enter key
-        System.out.print("Date of deposit in YYYY-MM-DD format(enter key = today's date): ");
-        LocalDate dateInput = ImprovedIO.getDateInput();
+        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ");
+        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
+        String descriptionInput = promptStringInput("Details(what was it for): ");
+        String vendorInput = promptStringInput("Deposit from: ");
+        double amountInput = promptDoubleInput("Amount: ");
 
-        System.out.print("Time of deposit(enter key = current time): ");
-        LocalTime timeInput = ImprovedIO.getTimeInput();
-        LocalDateTime localDateTime = dateInput.atTime(timeInput);
+        LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
+        if(amountInput < 0) amountInput *= -1;
 
-        System.out.print("Description of the deposit: ");
-        String descriptionInput = ImprovedIO.getLineOfInput();
-
-        System.out.print("Vendor who provided deposit: ");
-        String vendorInput = ImprovedIO.getLineOfInput();
-
-        System.out.print("Amount of deposit: ");
-        double amountInput = ImprovedIO.getDoubleInput();
-        if(amountInput < 0) amountInput *= -1; //ensures if negative will be positive
-
-        ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
-        System.out.println("\nLedger post successfully added");
+        ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
+        System.out.println("\nSuccessfully posted to ledger!");
     }
 
     public static void makePayment() {
         System.out.println("\nTo post a payment please provide the following information: ");
 
-        System.out.print("Date of payment in YYYY-MM-DD format(enter key = today's date): ");
-        LocalDate dateInput = ImprovedIO.getDateInput();
+        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ");
+        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
+        String descriptionInput = promptStringInput("Details (what was it for): ");
+        String vendorInput = promptStringInput("Pay to: ");
+        double amountInput = promptDoubleInput("Amount: ");
 
-        //add functionality to fetch current localDateTime with enter key
-        System.out.print("Time of payment(enter key = current time): ");
-        LocalTime timeInput = ImprovedIO.getTimeInput();
-        LocalDateTime localDateTime = dateInput.atTime(timeInput);
+        LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
+        if(amountInput > 0) amountInput *= -1;
 
-        System.out.print("Description of the payment: ");
-        String descriptionInput = ImprovedIO.getLineOfInput();
+        ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
+        System.out.println("\nSuccessfully posted to ledger!");
+    }
 
-        System.out.print("Payment made to which vendor: ");
-        String vendorInput = ImprovedIO.getLineOfInput();
+    /*-----User prompt and input methods-----*/
+    public static String promptStringInput(String prompt) {
+        System.out.print(prompt);
+        return ImprovedIO.getLineOfInput();
+    }
 
-        System.out.print("Amount of payment: ");
-        double amountInput = ImprovedIO.getDoubleInput();
-        if(amountInput > 0) amountInput *= -1; //ensures if positive, will be negative
+    public static String promptWordInput(String prompt) {
+        System.out.print(prompt);
+        return ImprovedIO.getWordOfInput();
+    }
 
-        ledger.postToLedger(localDateTime, descriptionInput, vendorInput, amountInput);
-        System.out.println("\nLedger post successfully added");
+    public static double promptDoubleInput(String prompt) {
+        System.out.print(prompt);
+        return ImprovedIO.getDoubleInput();
+    }
+
+    public static LocalDate promptDateInput(String prompt) {
+        System.out.print(prompt);
+        return ImprovedIO.getDateInput();
+    }
+
+    public static LocalTime promptTimeInput(String prompt) {
+        System.out.print(prompt);
+        return ImprovedIO.getTimeInput();
     }
 }
