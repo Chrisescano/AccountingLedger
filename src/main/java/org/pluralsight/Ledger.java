@@ -1,10 +1,11 @@
 package org.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
-    private ArrayList<LedgerPost> ledger;
+    private ArrayList<LedgerPost> ledgerMasterCopy;
     private String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
     private String tableHeader = "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n";
     private String tableDivider = "+" +
@@ -14,23 +15,28 @@ public class Ledger {
             "-".repeat(13) + "+";
 
     public Ledger() {
-        ledger = new ArrayList<>();
+        ledgerMasterCopy = new ArrayList<>();
+    }
+
+    public static void main(String[] args) {
+        Ledger ledger = new Ledger();
+        ledger.sortFromPreviousMonth();
     }
 
     /*-----Methods-----*/
 
     public void postToLedger(LocalDateTime timeStamp, String description, String vendor, double amount) {
-        ledger.add(new LedgerPost(timeStamp, description, vendor, amount));
+        ledgerMasterCopy.add(new LedgerPost(timeStamp, description, vendor, amount));
+    }
+
+    private ArrayList<LedgerPost> deepCopy() {
+        return new ArrayList<>(ledgerMasterCopy);
     }
 
     /*-----Display Methods-----*/
 
     public void displayLedgerAsTable() {
-        displayLedgerAsTable(DEFAULT_FORMAT, this.ledger);
-    }
-
-    public void displayLedgerAsTable(String format) {
-        displayLedgerAsTable(format, this.ledger);
+        displayLedgerAsTable(DEFAULT_FORMAT, ledgerMasterCopy);
     }
 
     public void displayLedgerAsTable(ArrayList<LedgerPost> ledger) {
@@ -57,20 +63,56 @@ public class Ledger {
     /*-----Sorting Methods-----*/
 
     public void displayPaymentsOnly() {
-        ArrayList<LedgerPost> tmpLedger = ledger;
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
         tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() > 0);
         displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
     }
 
     public void displayDepositsOnly() {
-        ArrayList<LedgerPost> tmpLedger = ledger;
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
         tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() < 0);
         displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
 
-        for(LedgerPost ledgerPost : ledger) {
-            if(ledgerPost.getAmount() < 0) {
-                //print ledgerpost as table format
-            }
-        }
+    public void sortFromMonthToDate() {
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        LocalDateTime beginningOfMonth = getStartOfMonth();
+
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfMonth));
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
+
+    public void sortFromPreviousMonth() {
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
+        LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
+
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfLastMonth) ||
+                ledgerPost.getTimeStamp().isAfter(endOfLastMonth));
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
+
+    /*-----Helper Functions-----*/
+
+    private LocalDateTime getStartOfMonth() {
+        return LocalDateTime.of(
+                LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonth(),
+                1,
+                0,
+                0,
+                0
+        );
+    }
+
+    private LocalDateTime getStartOfYear() {
+        return LocalDateTime.of(
+                LocalDateTime.now().getYear(),
+                1,
+                1,
+                0,
+                0,
+                0
+        );
     }
 }

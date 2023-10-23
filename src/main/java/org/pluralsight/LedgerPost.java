@@ -38,6 +38,10 @@ public class LedgerPost {
         return timeStamp.format(formatter);
     }
 
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
     public String getDescription() {
         return description;
     }

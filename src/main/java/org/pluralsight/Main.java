@@ -87,8 +87,14 @@ public class Main {
                     Type in your command:\s""");
             int command = ImprovedIO.getIntInput();
             switch (command) {
-                case 1 -> System.out.println("You want to filter by month to date");
-                case 2 -> System.out.println("You want to filter by previous month");
+                case 1 -> {
+                    System.out.println("\nFiltering from Month to Date...");
+                    ledger.sortFromMonthToDate();
+                }
+                case 2 -> {
+                    System.out.println("\nFiltering last months posts....");
+                    ledger.sortFromPreviousMonth();
+                }
                 case 3 -> System.out.println("Ypu want to filter by year to date");
                 case 4 -> System.out.println("You want to filter by previous year");
                 case 5 -> System.out.println("You want to filter by vendor");
