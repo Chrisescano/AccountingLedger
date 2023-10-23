@@ -1,5 +1,6 @@
 package org.pluralsight;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -152,7 +153,8 @@ public class Main {
     public static void addDeposit() {
         System.out.println("\nTo post a deposit please provide the following information: ");
 
-        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ");
+        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
+                LocalDate.now());
         LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
         String descriptionInput = promptStringInput("Details(what was it for): ");
         String vendorInput = promptStringInput("Deposit from: ");
@@ -166,9 +168,10 @@ public class Main {
     }
 
     public static void makePayment() {
-        System.out.println("\nTo post a payment please provide the following information: ");
+        System.out.println("\nTo post a payment please provide the following information");
 
-        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ");
+        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
+                LocalDate.now());
         LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
         String descriptionInput = promptStringInput("Details (what was it for): ");
         String vendorInput = promptStringInput("Pay to: ");
@@ -179,6 +182,32 @@ public class Main {
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         System.out.println("\nSuccessfully posted to ledger!");
+    }
+
+    public static void customSearch() {
+        System.out.println("\nTo do a custom search please provide the following information:");
+
+        //get start date - if nothing return smallest possible LocalDateTime
+        LocalDateTime startDate = promptDateInput("Search by start of date", LocalDate.MIN).atTime(LocalTime.MIN);
+
+        //get end date - if nothing return current LocalDateTime
+        LocalDateTime endDate = promptDateInput("Search by end date: ", LocalDate.MAX).atTime(LocalTime.MAX);
+
+        //get description - if nothing do not query
+        String description = promptStringInput("Search by description: ");
+
+        //get vendor - if nothing do not query
+        String vendor = promptStringInput("Search by vendor: ");
+
+        //get amount - if nothing do not query
+        double amount = promptDoubleInput("Search by amount: ");
+
+        //feed all into Sorter method
+        ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount,
+                ledger.getMasterCopy());
+
+        //print sorted ledger to screen
+        ledger.displayAsTable(sortedLedger);
     }
 
     /*-----User prompt and input methods-----*/
@@ -192,9 +221,9 @@ public class Main {
         return ImprovedIO.getDoubleInput();
     }
 
-    public static LocalDate promptDateInput(String prompt) {
+    public static LocalDate promptDateInput(String prompt, LocalDate defaultDate) {
         System.out.print(prompt);
-        return ImprovedIO.getDateInput();
+        return ImprovedIO.getDateInput(defaultDate);
     }
 
     public static LocalTime promptTimeInput(String prompt) {

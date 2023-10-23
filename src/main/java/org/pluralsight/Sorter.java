@@ -1,5 +1,6 @@
 package org.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -57,6 +58,14 @@ public class Sorter {
         ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
         sortedLedger.removeIf(transaction -> !transaction.vendor().equalsIgnoreCase(vendor));
         return sortedLedger;
+    }
+
+    public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
+            String description, String vendor, double amount, ArrayList<Transaction> ledger) {
+
+
+
+        return ledger;
     }
 
     /*-----Helper Functions-----*/

@@ -3,6 +3,7 @@ package org.pluralsight;
 import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -62,12 +63,12 @@ public class ImprovedIO {
         return input;
     }
 
-    public static LocalDate getDateInput() {
+    public static LocalDate getDateInput(LocalDate defaultSetting) {
         while(true) {
             String userInput = getLineOfInput();
             if(userInput.equals("")) {
                 canTimeInputBeAnything = false;
-                return LocalDate.now();
+                return defaultSetting;
             }
 
             try {
