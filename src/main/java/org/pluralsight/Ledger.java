@@ -13,20 +13,8 @@ public class Ledger {
             "-".repeat(17) + "+" +
             "-".repeat(13) + "+";
 
-    /*
-    To shorting the ledger class might have to move sorting methods to new class.
-    technically speaking a ledger does not sort itself, something else would. A ledger
-    is only supposed to be able to hold information of entries, display itself, and change
-    its formatting.
-     */
-
     public Ledger() {
         ledgerMasterCopy = new ArrayList<>();
-    }
-
-    public static void main(String[] args) {
-        Ledger ledger = new Ledger();
-        ledger.sortByPreviousYear();
     }
 
     /*-----Methods-----*/
@@ -71,83 +59,9 @@ public class Ledger {
         System.out.println(tableDivider);
     }
 
-    /*-----Report Sorting Methods-----*/
+    /*-----Getters-----*/
 
-    public void displayPaymentsOnly() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        tmpLedger.removeIf(transaction -> transaction.amount() > 0);
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void displayDepositsOnly() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        tmpLedger.removeIf(transaction -> transaction.amount() < 0);
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void sortFromMonthToDate() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        LocalDateTime beginningOfMonth = getStartOfMonth();
-
-        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfMonth));
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void sortByPreviousMonth() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
-        LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
-
-        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastMonth) ||
-                transaction.timeStamp().isAfter(endOfLastMonth));
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void sortFromYearToDate() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        LocalDateTime beginningOfYear = getStartOfYear();
-
-        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfYear));
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void sortByPreviousYear() {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        LocalDateTime beginningOfLastYear = getStartOfYear().minusYears(1);
-        LocalDateTime endOfLastYear = getStartOfYear().minusSeconds(1);
-
-        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastYear) ||
-                transaction.timeStamp().isAfter(endOfLastYear));
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    public void sortByVendor(String vendor) {
-        ArrayList<Transaction> tmpLedger = deepCopy();
-        tmpLedger.removeIf(transaction -> !transaction.vendor().equalsIgnoreCase(vendor));
-        displayLedgerAsTable(tmpLedger);
-    }
-
-    /*-----Helper Functions-----*/
-
-    private LocalDateTime getStartOfMonth() {
-        return LocalDateTime.of(
-                LocalDateTime.now().getYear(),
-                LocalDateTime.now().getMonth(),
-                1,
-                0,
-                0,
-                0
-        );
-    }
-
-    private LocalDateTime getStartOfYear() {
-        return LocalDateTime.of(
-                LocalDateTime.now().getYear(),
-                1,
-                1,
-                0,
-                0,
-                0
-        );
+    public ArrayList<Transaction> getLedgerMasterCopy() {
+        return ledgerMasterCopy;
     }
 }

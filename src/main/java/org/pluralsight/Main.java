@@ -3,6 +3,7 @@ package org.pluralsight;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Main {
     static Ledger ledger = new Ledger();
@@ -59,11 +60,13 @@ public class Main {
                 }
                 case 'D' -> {
                     System.out.println("\nFetching all deposits...");
-                    ledger.displayDepositsOnly();
+                    ArrayList<Transaction> sortedLedger = Sorter.depositsOnly(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 'P' -> {
                     System.out.println("\nFetching all payments...");
-                    ledger.displayPaymentsOnly();
+                    ArrayList<Transaction> sortedLedger = Sorter.paymentsOnly(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
                 case 'H' -> {return;}
@@ -89,24 +92,29 @@ public class Main {
             switch (command) {
                 case 1 -> {
                     System.out.println("\nFiltering from Month to Date...");
-                    ledger.sortFromMonthToDate();
+                    ArrayList<Transaction> sortedLedger = Sorter.fromMonthToDate(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 2 -> {
                     System.out.println("\nFiltering last months posts....");
-                    ledger.sortByPreviousMonth();
+                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousMonth(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 3 -> {
                     System.out.println("\nFiltering from Year to Date...");
-                    ledger.sortFromYearToDate();
+                    ArrayList<Transaction> sortedLedger = Sorter.fromYearToDate(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 4 -> {
                     System.out.println("\nFiltering last years posts...");
-                    ledger.sortByPreviousYear();
+                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousYear(ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 5 -> {
                     String vendorInput = promptStringInput("Search by vendor: ");
                     System.out.printf("\nFiltering by vendors: %s\n", vendorInput);
-                    ledger.sortByVendor(vendorInput);
+                    ArrayList<Transaction> sortedLedger = Sorter.byVendor(vendorInput, ledger.getLedgerMasterCopy());
+                    ledger.displayLedgerAsTable(sortedLedger);
                 }
                 case 6 -> {return;}
                 default -> System.out.println("Sorry, that is not a valid command. Please try again");
