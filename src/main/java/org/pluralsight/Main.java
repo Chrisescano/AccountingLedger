@@ -179,11 +179,6 @@ public class Main {
         return ImprovedIO.getLineOfInput();
     }
 
-//    public static String promptWordInput(String prompt) {
-//        System.out.print(prompt);
-//        return ImprovedIO.getWordOfInput();
-//    }
-
     public static double promptDoubleInput(String prompt) {
         System.out.print(prompt);
         return ImprovedIO.getDoubleInput();

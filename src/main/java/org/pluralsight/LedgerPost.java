@@ -3,26 +3,11 @@ package org.pluralsight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LedgerPost {
-    private LocalDateTime timeStamp;
-    private String description;
-    private String vendor;
-    private double amount;
-
-    public LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
-        this.timeStamp = timeStamp;
-        this.description = description;
-        this.vendor = vendor;
-        this.amount = amount;
-    }
-//    public LedgerPost(int year, int month, int day, int hour, int minute, int second,
-//                      String description, String vendor, double amount) {
-//        this(LocalDateTime.of(year, month, day, hour, minute, second), description, vendor, amount);
-//    }
+public record LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
 
     public String toTableFormat(String format) {
         return String.format(
-                format, getDate(), getTime(), getDescription(), getVendor(), getAmount()
+                format, getDate(), getTime(), description(), vendor(), amount()
         );
     }
 
@@ -38,30 +23,14 @@ public class LedgerPost {
         return timeStamp.format(formatter);
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
     /*-----Overrides-----*/
 
     @Override
     public String toString() {
         return getDate() + "|" +
-               getTime() + "|" +
-               getDescription() + "|" +
-               getVendor() + "|" +
-               getAmount();
+                getTime() + "|" +
+                description() + "|" +
+                vendor() + "|" +
+                amount();
     }
 }

@@ -1,14 +1,13 @@
 package org.pluralsight;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
-    private ArrayList<LedgerPost> ledgerMasterCopy;
-    private String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
-    private String tableHeader = "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n";
-    private String tableDivider = "+" +
+    private final ArrayList<LedgerPost> ledgerMasterCopy;
+    private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
+    //private final String tableHeader = "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n";
+    private final String tableDivider = "+" +
             "-".repeat(23) + "+" +
             "-".repeat(32) + "+" +
             "-".repeat(17) + "+" +
@@ -28,6 +27,8 @@ public class Ledger {
     public void postToLedger(LocalDateTime timeStamp, String description, String vendor, double amount) {
         ledgerMasterCopy.add(new LedgerPost(timeStamp, description, vendor, amount));
     }
+
+
 
     private ArrayList<LedgerPost> deepCopy() {
         return new ArrayList<>(ledgerMasterCopy);
@@ -51,7 +52,9 @@ public class Ledger {
 
     private void displayTableHeader() {
         System.out.println(tableDivider);
-        System.out.printf(tableHeader, "Date", "Time", "Description", "Vendor", "Price");
+        System.out.printf(
+                "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n",
+                "Date", "Time", "Description", "Vendor", "Price");
         System.out.println(tableDivider);
     }
 
@@ -60,26 +63,26 @@ public class Ledger {
         System.out.println(tableDivider);
     }
 
-    /*-----Sorting Methods-----*/
+    /*-----Report Sorting Methods-----*/
 
     public void displayPaymentsOnly() {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() > 0);
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.amount() > 0);
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void displayDepositsOnly() {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getAmount() < 0);
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.amount() < 0);
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void sortFromMonthToDate() {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
         LocalDateTime beginningOfMonth = getStartOfMonth();
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfMonth));
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfMonth));
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByPreviousMonth() {
@@ -87,17 +90,17 @@ public class Ledger {
         LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
         LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfLastMonth) ||
-                ledgerPost.getTimeStamp().isAfter(endOfLastMonth));
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfLastMonth) ||
+                ledgerPost.timeStamp().isAfter(endOfLastMonth));
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void sortFromYearToDate() {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
         LocalDateTime beginningOfYear = getStartOfYear();
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfYear));
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfYear));
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByPreviousYear() {
@@ -105,15 +108,15 @@ public class Ledger {
         LocalDateTime beginningOfLastYear = getStartOfYear().minusYears(1);
         LocalDateTime endOfLastYear = getStartOfYear().minusSeconds(1);
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfLastYear) ||
-                ledgerPost.getTimeStamp().isAfter(endOfLastYear));
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfLastYear) ||
+                ledgerPost.timeStamp().isAfter(endOfLastYear));
+        displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByVendor(String vendor) {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> !ledgerPost.getVendor().equalsIgnoreCase(vendor));
-        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+        tmpLedger.removeIf(ledgerPost -> !ledgerPost.vendor().equalsIgnoreCase(vendor));
+        displayLedgerAsTable(tmpLedger);
     }
 
     /*-----Helper Functions-----*/
