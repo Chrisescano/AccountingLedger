@@ -20,7 +20,7 @@ public class Ledger {
 
     public static void main(String[] args) {
         Ledger ledger = new Ledger();
-        ledger.sortFromPreviousMonth();
+        ledger.sortByPreviousYear();
     }
 
     /*-----Methods-----*/
@@ -82,13 +82,37 @@ public class Ledger {
         displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
     }
 
-    public void sortFromPreviousMonth() {
+    public void sortByPreviousMonth() {
         ArrayList<LedgerPost> tmpLedger = deepCopy();
         LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
         LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
 
         tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfLastMonth) ||
                 ledgerPost.getTimeStamp().isAfter(endOfLastMonth));
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
+
+    public void sortFromYearToDate() {
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        LocalDateTime beginningOfYear = getStartOfYear();
+
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfYear));
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
+
+    public void sortByPreviousYear() {
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        LocalDateTime beginningOfLastYear = getStartOfYear().minusYears(1);
+        LocalDateTime endOfLastYear = getStartOfYear().minusSeconds(1);
+
+        tmpLedger.removeIf(ledgerPost -> ledgerPost.getTimeStamp().isBefore(beginningOfLastYear) ||
+                ledgerPost.getTimeStamp().isAfter(endOfLastYear));
+        displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
+    }
+
+    public void sortByVendor(String vendor) {
+        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        tmpLedger.removeIf(ledgerPost -> !ledgerPost.getVendor().equalsIgnoreCase(vendor));
         displayLedgerAsTable(DEFAULT_FORMAT, tmpLedger);
     }
 

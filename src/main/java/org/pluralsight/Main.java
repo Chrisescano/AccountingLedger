@@ -93,15 +93,22 @@ public class Main {
                 }
                 case 2 -> {
                     System.out.println("\nFiltering last months posts....");
-                    ledger.sortFromPreviousMonth();
+                    ledger.sortByPreviousMonth();
                 }
-                case 3 -> System.out.println("Ypu want to filter by year to date");
-                case 4 -> System.out.println("You want to filter by previous year");
-                case 5 -> System.out.println("You want to filter by vendor");
-                case 6 -> {
-                    System.out.println("You want to go back to the ledger screen");
-                    return;
+                case 3 -> {
+                    System.out.println("\nFiltering from Year to Date...");
+                    ledger.sortFromYearToDate();
                 }
+                case 4 -> {
+                    System.out.println("\nFiltering last years posts...");
+                    ledger.sortByPreviousYear();
+                }
+                case 5 -> {
+                    String vendorInput = promptStringInput("Search by vendor: ");
+                    System.out.printf("\nFiltering by vendors: %s\n", vendorInput);
+                    ledger.sortByVendor(vendorInput);
+                }
+                case 6 -> {return;}
                 default -> System.out.println("Sorry, that is not a valid command. Please try again");
             }
         }

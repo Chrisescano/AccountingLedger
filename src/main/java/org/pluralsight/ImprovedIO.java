@@ -37,6 +37,7 @@ public class ImprovedIO {
         while(true) {
             try {
                 input = scanner.nextInt();
+                scanner.nextLine();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Oops, expecting an integer value. Please try again");
@@ -51,6 +52,7 @@ public class ImprovedIO {
         while(true) {
             try {
                 input = scanner.nextDouble();
+                scanner.nextLine();
                 break;
             } catch(InputMismatchException e) {
                 System.out.println("Oops, expecting an decimal value. Please try again");
