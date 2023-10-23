@@ -56,17 +56,17 @@ public class Main {
             switch (command) {
                 case 'A' -> {
                     System.out.println("\nFetching all ledger posts...");
-                    ledger.displayLedgerAsTable();
+                    ledger.displayAsTable();
                 }
                 case 'D' -> {
                     System.out.println("\nFetching all deposits...");
-                    ArrayList<Transaction> sortedLedger = Sorter.depositsOnly(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.depositsOnly(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 'P' -> {
                     System.out.println("\nFetching all payments...");
-                    ArrayList<Transaction> sortedLedger = Sorter.paymentsOnly(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.paymentsOnly(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
                 case 'H' -> {return;}
@@ -92,29 +92,29 @@ public class Main {
             switch (command) {
                 case 1 -> {
                     System.out.println("\nFiltering from Month to Date...");
-                    ArrayList<Transaction> sortedLedger = Sorter.fromMonthToDate(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.fromMonthToDate(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 2 -> {
                     System.out.println("\nFiltering last months posts....");
-                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousMonth(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousMonth(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 3 -> {
                     System.out.println("\nFiltering from Year to Date...");
-                    ArrayList<Transaction> sortedLedger = Sorter.fromYearToDate(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.fromYearToDate(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 4 -> {
                     System.out.println("\nFiltering last years posts...");
-                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousYear(ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.byPreviousYear(ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 5 -> {
                     String vendorInput = promptStringInput("Search by vendor: ");
                     System.out.printf("\nFiltering by vendors: %s\n", vendorInput);
-                    ArrayList<Transaction> sortedLedger = Sorter.byVendor(vendorInput, ledger.getLedgerMasterCopy());
-                    ledger.displayLedgerAsTable(sortedLedger);
+                    ArrayList<Transaction> sortedLedger = Sorter.byVendor(vendorInput, ledger.getMasterCopy());
+                    ledger.displayAsTable(sortedLedger);
                 }
                 case 6 -> {return;}
                 default -> System.out.println("Sorry, that is not a valid command. Please try again");
