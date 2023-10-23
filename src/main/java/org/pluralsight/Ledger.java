@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
-    private final ArrayList<LedgerPost> ledgerMasterCopy;
+    private final ArrayList<Transaction> ledgerMasterCopy;
     private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
     //private final String tableHeader = "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n";
     private final String tableDivider = "+" +
@@ -32,12 +32,12 @@ public class Ledger {
     /*-----Methods-----*/
 
     public void postToLedger(LocalDateTime timeStamp, String description, String vendor, double amount) {
-        ledgerMasterCopy.add(new LedgerPost(timeStamp, description, vendor, amount));
+        ledgerMasterCopy.add(new Transaction(timeStamp, description, vendor, amount));
     }
 
 
 
-    private ArrayList<LedgerPost> deepCopy() {
+    private ArrayList<Transaction> deepCopy() {
         return new ArrayList<>(ledgerMasterCopy);
     }
 
@@ -47,14 +47,14 @@ public class Ledger {
         displayLedgerAsTable(DEFAULT_FORMAT, ledgerMasterCopy);
     }
 
-    public void displayLedgerAsTable(ArrayList<LedgerPost> ledger) {
+    public void displayLedgerAsTable(ArrayList<Transaction> ledger) {
         displayLedgerAsTable(DEFAULT_FORMAT, ledger);
     }
 
-    public void displayLedgerAsTable(String format, ArrayList<LedgerPost> ledger) {
+    public void displayLedgerAsTable(String format, ArrayList<Transaction> ledger) {
         displayTableHeader();
-        for(LedgerPost ledgerPost : ledger)
-            displayTableEntry(ledgerPost.toTableFormat(format));
+        for(Transaction transaction : ledger)
+            displayTableEntry(transaction.toTableFormat(format));
     }
 
     private void displayTableHeader() {
@@ -73,56 +73,56 @@ public class Ledger {
     /*-----Report Sorting Methods-----*/
 
     public void displayPaymentsOnly() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.amount() > 0);
+        ArrayList<Transaction> tmpLedger = deepCopy();
+        tmpLedger.removeIf(transaction -> transaction.amount() > 0);
         displayLedgerAsTable(tmpLedger);
     }
 
     public void displayDepositsOnly() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.amount() < 0);
+        ArrayList<Transaction> tmpLedger = deepCopy();
+        tmpLedger.removeIf(transaction -> transaction.amount() < 0);
         displayLedgerAsTable(tmpLedger);
     }
 
     public void sortFromMonthToDate() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        ArrayList<Transaction> tmpLedger = deepCopy();
         LocalDateTime beginningOfMonth = getStartOfMonth();
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfMonth));
+        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfMonth));
         displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByPreviousMonth() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        ArrayList<Transaction> tmpLedger = deepCopy();
         LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
         LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfLastMonth) ||
-                ledgerPost.timeStamp().isAfter(endOfLastMonth));
+        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastMonth) ||
+                transaction.timeStamp().isAfter(endOfLastMonth));
         displayLedgerAsTable(tmpLedger);
     }
 
     public void sortFromYearToDate() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        ArrayList<Transaction> tmpLedger = deepCopy();
         LocalDateTime beginningOfYear = getStartOfYear();
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfYear));
+        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfYear));
         displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByPreviousYear() {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
+        ArrayList<Transaction> tmpLedger = deepCopy();
         LocalDateTime beginningOfLastYear = getStartOfYear().minusYears(1);
         LocalDateTime endOfLastYear = getStartOfYear().minusSeconds(1);
 
-        tmpLedger.removeIf(ledgerPost -> ledgerPost.timeStamp().isBefore(beginningOfLastYear) ||
-                ledgerPost.timeStamp().isAfter(endOfLastYear));
+        tmpLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastYear) ||
+                transaction.timeStamp().isAfter(endOfLastYear));
         displayLedgerAsTable(tmpLedger);
     }
 
     public void sortByVendor(String vendor) {
-        ArrayList<LedgerPost> tmpLedger = deepCopy();
-        tmpLedger.removeIf(ledgerPost -> !ledgerPost.vendor().equalsIgnoreCase(vendor));
+        ArrayList<Transaction> tmpLedger = deepCopy();
+        tmpLedger.removeIf(transaction -> !transaction.vendor().equalsIgnoreCase(vendor));
         displayLedgerAsTable(tmpLedger);
     }
 

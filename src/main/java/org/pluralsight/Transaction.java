@@ -3,7 +3,7 @@ package org.pluralsight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public record LedgerPost(LocalDateTime timeStamp, String description, String vendor, double amount) {
+public record Transaction(LocalDateTime timeStamp, String description, String vendor, double amount) {
 
     public String toTableFormat(String format) {
         return String.format(
