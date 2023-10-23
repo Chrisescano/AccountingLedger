@@ -13,6 +13,13 @@ public class Ledger {
             "-".repeat(17) + "+" +
             "-".repeat(13) + "+";
 
+    /*
+    To shorting the ledger class might have to move sorting methods to new class.
+    technically speaking a ledger does not sort itself, something else would. A ledger
+    is only supposed to be able to hold information of entries, display itself, and change
+    its formatting.
+     */
+
     public Ledger() {
         ledgerMasterCopy = new ArrayList<>();
     }

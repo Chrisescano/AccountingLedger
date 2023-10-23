@@ -65,7 +65,10 @@ public class ImprovedIO {
     public static LocalDate getDateInput() {
         while(true) {
             String userInput = getLineOfInput();
-            if(userInput.equals("")) return getDateNow();
+            if(userInput.equals("")) {
+                canTimeInputBeAnything = false;
+                return LocalDate.now();
+            }
 
             try {
                 LocalDate dateInput = checkDateFormat(userInput);
@@ -87,15 +90,10 @@ public class ImprovedIO {
         }
     }
 
-    public static LocalDate getDateNow() {
-        canTimeInputBeAnything = false;
-        return LocalDate.now();
-    }
-
     public static LocalTime getTimeInput() {
         while(true) {
             String userInput = getLineOfInput();
-            if(userInput.equals("")) return getTimeNow();
+            if(userInput.equals("")) return LocalTime.now();
 
             try {
                 LocalTime timeInput = checkTimeFormat(userInput);
@@ -116,10 +114,6 @@ public class ImprovedIO {
                 System.out.println("Oops, a part of the time is not a number. Please try again");
             }
         }
-    }
-
-    public static LocalTime getTimeNow() {
-        return LocalTime.now();
     }
 
     /*-----File Read/Write-----*/
@@ -191,7 +185,7 @@ public class ImprovedIO {
             );
         }
 
-        //will throw exception if time fields out or range, or if non-integer is typed in
+        //will throw exception if time fields out of range, or if non-integer is typed in
         return LocalTime.of(
                 Integer.parseInt(tokens[0]),
                 Integer.parseInt(tokens[1]),
@@ -199,7 +193,7 @@ public class ImprovedIO {
         );
     }
 
-    /*-----Custom Exception Class*/
+    /*-----Custom Exception Class-----*/
     private static class IllegalDateTimeFormatException extends Exception {
         public IllegalDateTimeFormatException(String message) {
             super(message);
