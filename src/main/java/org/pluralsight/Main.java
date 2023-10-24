@@ -131,7 +131,8 @@ public class Main {
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
-        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
+        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ",
+                LocalTime.now());
         String descriptionInput = promptStringInput("Details(what was it for): ");
         String vendorInput = promptStringInput("Deposit from: ");
         double amountInput = promptDoubleInput("Amount: ");
@@ -148,7 +149,8 @@ public class Main {
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
-        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ");
+        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ",
+                LocalTime.now());
         String descriptionInput = promptStringInput("Details (what was it for): ");
         String vendorInput = promptStringInput("Pay to: ");
         double amountInput = promptDoubleInput("Amount: ");
@@ -163,13 +165,11 @@ public class Main {
     public static void customSearch() {
         System.out.println("\nTo do a custom search please provide the following information:");
 
-        LocalDateTime startDate = promptDateInput("Search by start of date", LocalDate.MIN).atTime(LocalTime.MIN);
-        LocalDateTime endDate = promptDateInput("Search by end date: ", LocalDate.MAX).atTime(LocalTime.MAX);
+        String startDate = promptStringInput("Search by start of date");
+        String endDate = promptStringInput("Search by end date: ");
         String description = promptStringInput("Search by description: ");
         String vendor = promptStringInput("Search by vendor: ");
-
-        //if pressing enter set amount to 0
-        double amount = promptDoubleInput("Search by amount: ");
+        String amount = promptStringInput("Search by amount: ");
 
         ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount,
                 ledger.getMasterCopy());
@@ -189,11 +189,15 @@ public class Main {
 
     public static LocalDate promptDateInput(String prompt, LocalDate defaultDate) {
         System.out.print(prompt);
-        return ImprovedIO.getDateInput(defaultDate);
+        String userDateInput = ImprovedIO.getLineOfInput();
+        if(userDateInput.equals("")) return defaultDate;
+        return ImprovedIO.getDateInput(userDateInput);
     }
 
-    public static LocalTime promptTimeInput(String prompt) {
+    public static LocalTime promptTimeInput(String prompt, LocalTime defaultTime) {
         System.out.print(prompt);
-        return ImprovedIO.getTimeInput();
+        String userTimeInput = ImprovedIO.getLineOfInput();
+        if(userTimeInput.equals("")) return defaultTime;
+        return ImprovedIO.getTimeInput(userTimeInput);
     }
 }

@@ -1,6 +1,7 @@
 package org.pluralsight;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Sorter {
@@ -59,15 +60,32 @@ public class Sorter {
         return sortedLedger;
     }
 
-    public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
-            String description, String vendor, double amount, ArrayList<Transaction> ledger) {
+    public static ArrayList<Transaction> byCustomSearch(String startDate, String endDate,
+            String description, String vendor, String amount, ArrayList<Transaction> ledger) {
         ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
 
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDate));
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDate));
-        sortedLedger.removeIf(transaction -> !transaction.description().toLowerCase().contains(description.toLowerCase()));
-        sortedLedger.removeIf(transaction -> !transaction.vendor().toLowerCase().contains(description.toLowerCase()));
-        if(amount != 0) sortedLedger.removeIf(transaction -> transaction.amount() != amount);
+        if(!startDate.equals("")) {
+            LocalDateTime startDateTime = ImprovedIO.getDateInput(startDate).atTime(LocalTime.MIN);
+            sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
+        }
+        if(!endDate.equals("")) {
+            LocalDateTime endDateTime = ImprovedIO.getDateInput(startDate).atTime(LocalTime.MIN);
+            sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(endDateTime));
+        }
+        if(!description.equals("")) {
+            sortedLedger.removeIf(
+                    transaction -> !transaction.description().toLowerCase().contains(description.toLowerCase())
+            );
+        }
+        if(!vendor.equals("")) {
+            sortedLedger.removeIf(
+                    transaction -> !transaction.description().toLowerCase().contains(vendor.toLowerCase())
+            );
+        }
+        if(!amount.equals("")) {
+            double doubleAmount = ImprovedIO.getDoubleInput(amount);
+            sortedLedger.removeIf(transaction -> transaction.amount() != doubleAmount);
+        }
         return sortedLedger;
     }
 

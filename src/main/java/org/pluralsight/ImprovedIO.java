@@ -3,7 +3,6 @@ package org.pluralsight;
 import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -11,11 +10,6 @@ import java.util.Scanner;
 public class ImprovedIO {
     private static final Scanner scanner = new Scanner(System.in);
     private static boolean canTimeInputBeAnything = false;
-
-    public static void main(String[] args) {
-        LocalTime t = getTimeInput();
-        System.out.println(t);
-    }
 
     /*-----I/O Methods-----*/
 
@@ -63,14 +57,18 @@ public class ImprovedIO {
         return input;
     }
 
-    public static LocalDate getDateInput(LocalDate defaultSetting) {
+    public static double getDoubleInput(String userInput) {
         while(true) {
-            String userInput = getLineOfInput();
-            if(userInput.equals("")) {
-                canTimeInputBeAnything = false;
-                return defaultSetting;
+            try {
+                return Double.parseDouble(userInput);
+            } catch(InputMismatchException e) {
+                System.out.println("Oops, expecting an decimal value. Please try again");
             }
+        }
+    }
 
+    public static LocalDate getDateInput(String userInput) {
+        while(true) {
             try {
                 LocalDate dateInput = checkDateFormat(userInput);
                 if(dateInput.isAfter(LocalDate.now())) {
@@ -91,11 +89,8 @@ public class ImprovedIO {
         }
     }
 
-    public static LocalTime getTimeInput() {
+    public static LocalTime getTimeInput(String userInput) {
         while(true) {
-            String userInput = getLineOfInput();
-            if(userInput.equals("")) return LocalTime.now();
-
             try {
                 LocalTime timeInput = checkTimeFormat(userInput);
                 if(canTimeInputBeAnything) return timeInput;
@@ -148,6 +143,7 @@ public class ImprovedIO {
     }
 
     /*-----Private Methods-----*/
+
     private static LocalDate checkDateFormat(String date) throws DateTimeException, NumberFormatException, IllegalDateTimeFormatException {
         //checks for '-' chars
         if(!date.contains("-")) {
