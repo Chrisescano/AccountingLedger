@@ -114,6 +114,16 @@ public class ImprovedIO {
 
     /*-----File Read/Write-----*/
 
+    public static void makeFile(String fileName) {
+        File transactionsFile = new File(fileName);
+        try {
+            //creates file if it does not exist already
+            transactionsFile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String readFromFile(String fileName) {
         String file = "";
         try {

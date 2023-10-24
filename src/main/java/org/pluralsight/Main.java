@@ -9,8 +9,9 @@ public class Main {
     static Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to your accounting ledger!");
-        homeScreenPrompt();
+//        System.out.println("Welcome to your accounting ledger!");
+//        homeScreenPrompt();
+
     }
 
     /*-----Main Command Menus-----*/
