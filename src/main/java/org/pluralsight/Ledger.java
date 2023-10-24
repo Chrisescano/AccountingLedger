@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Ledger {
     private final ArrayList<Transaction> masterCopy;
     private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
-    //private final String tableHeader = "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n";
     private final String tableDivider = "+" +
             "-".repeat(23) + "+" +
             "-".repeat(32) + "+" +
