@@ -9,7 +9,8 @@ public class Main {
     private static final Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-        ledger.fileManager.makeFile();
+        ledger.init();
+        ledger.load();
         System.out.println("Welcome to your accounting ledger!");
         homeScreenPrompt();
     }
@@ -142,8 +143,7 @@ public class Main {
         if(amountInput < 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
-        ledger.fileManager.setTransactionsBuffer(ledger.getMasterCopy());
-        ledger.fileManager.save();
+        ledger.save();
         System.out.println("\nSuccessfully posted to ledger!");
     }
 
@@ -162,8 +162,7 @@ public class Main {
         if(amountInput > 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
-        ledger.fileManager.setTransactionsBuffer(ledger.getMasterCopy());
-        ledger.fileManager.save();
+        ledger.save();
         System.out.println("\nSuccessfully posted to ledger!");
     }
 

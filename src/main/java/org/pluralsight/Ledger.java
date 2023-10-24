@@ -1,10 +1,12 @@
 package org.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Ledger {
-    public LedgerFileManager fileManager;
+    private final LedgerFileManager fileManager;
     private final ArrayList<Transaction> masterCopy;
     private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
     private final String tableDivider = "+" +
@@ -26,6 +28,27 @@ public class Ledger {
 
     public void postToLedger(LocalDateTime timeStamp, String description, String vendor, double amount) {
         masterCopy.add(new Transaction(timeStamp, description, vendor, amount));
+    }
+
+    public void save() {
+        fileManager.saveToFile(masterCopy);
+    }
+
+    public void load() {
+        String[] ledgerStrings = fileManager.loadFromFile();
+        for(String transaction : ledgerStrings) {
+            String[] tokens = transaction.split("\\|");
+            postToLedger(
+                    LocalDate.parse(tokens[0]).atTime(LocalTime.parse(tokens[1])),
+                    tokens[2],
+                    tokens[3],
+                    Double.parseDouble(tokens[4])
+            );
+        }
+    }
+
+    public void init() {
+        fileManager.makeFile();
     }
 
     /*-----Display Methods-----*/
