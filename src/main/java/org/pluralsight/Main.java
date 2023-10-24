@@ -1,6 +1,5 @@
 package org.pluralsight;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

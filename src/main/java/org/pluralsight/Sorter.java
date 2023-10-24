@@ -64,10 +64,10 @@ public class Sorter {
         ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
 
         sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDate));
-//        sortedLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDate));
-//        sortedLedger.removeIf(transaction -> !transaction.description().toLowerCase().contains(description.toLowerCase()));
-//        sortedLedger.removeIf(transaction -> !transaction.vendor().toLowerCase().contains(description.toLowerCase()));
-//        if(amount != 0) sortedLedger.removeIf(transaction -> transaction.amount() != amount);
+        sortedLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDate));
+        sortedLedger.removeIf(transaction -> !transaction.description().toLowerCase().contains(description.toLowerCase()));
+        sortedLedger.removeIf(transaction -> !transaction.vendor().toLowerCase().contains(description.toLowerCase()));
+        if(amount != 0) sortedLedger.removeIf(transaction -> transaction.amount() != amount);
         return sortedLedger;
     }
 

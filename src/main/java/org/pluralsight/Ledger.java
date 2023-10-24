@@ -35,8 +35,8 @@ public class Ledger {
 
     public void displayAsTable(String format, ArrayList<Transaction> ledger) {
         displayTableHeader();
-        for(int i = masterCopy.size() - 1; i > -1; i--) {
-            displayTableEntry(masterCopy.get(i).toTableFormat(format));
+        for(int i = ledger.size() - 1; i >= 0; i--) {
+            displayTableEntry(ledger.get(i).toTableFormat(format));
         }
     }
 
