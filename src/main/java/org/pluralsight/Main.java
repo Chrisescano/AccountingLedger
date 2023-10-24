@@ -6,12 +6,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Main {
-    static Ledger ledger = new Ledger();
+    private static final Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-//        System.out.println("Welcome to your accounting ledger!");
-//        homeScreenPrompt();
-
+        ledger.fileManager.makeFile();
+        System.out.println("Welcome to your accounting ledger!");
+        homeScreenPrompt();
     }
 
     /*-----Main Command Menus-----*/
@@ -142,6 +142,8 @@ public class Main {
         if(amountInput < 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
+        ledger.fileManager.setTransactionsBuffer(ledger.getMasterCopy());
+        ledger.fileManager.save();
         System.out.println("\nSuccessfully posted to ledger!");
     }
 
@@ -160,6 +162,8 @@ public class Main {
         if(amountInput > 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
+        ledger.fileManager.setTransactionsBuffer(ledger.getMasterCopy());
+        ledger.fileManager.save();
         System.out.println("\nSuccessfully posted to ledger!");
     }
 
@@ -178,6 +182,7 @@ public class Main {
     }
 
     /*-----User prompt and input methods-----*/
+
     public static String promptStringInput(String prompt) {
         System.out.print(prompt);
         return ImprovedIO.getLineOfInput();

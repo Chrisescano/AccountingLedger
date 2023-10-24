@@ -1,6 +1,5 @@
 package org.pluralsight;
 
-import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -109,46 +108,6 @@ public class ImprovedIO {
             } catch (NumberFormatException e) {
                 System.out.println("Oops, a part of the time is not a number. Please try again");
             }
-        }
-    }
-
-    /*-----File Read/Write-----*/
-
-    public static void makeFile(String fileName) {
-        File transactionsFile = new File(fileName);
-        try {
-            //creates file if it does not exist already
-            transactionsFile.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String readFromFile(String fileName) {
-        String file = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            String fileLine;
-            while ((fileLine = bufferedReader.readLine()) != null) {
-                file = file.concat(fileLine);
-            }
-        } catch(IOException e) {
-            System.out.println("Oops, looks like I could not read from the file: " + fileName);
-            e.printStackTrace();
-        }
-        return file;
-    }
-
-    public static void writeToFile(String fileName, String[] file) {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-            for (String fileLine : file) {
-                bufferedWriter.write(fileLine);
-            }
-            bufferedWriter.close();
-        } catch(IOException e) {
-            System.out.println("Oops, looks like I could not write to this file: " + fileName);
-            e.printStackTrace();
         }
     }
 

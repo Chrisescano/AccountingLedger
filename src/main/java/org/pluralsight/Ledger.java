@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
+    public LedgerFileManager fileManager;
     private final ArrayList<Transaction> masterCopy;
     private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
     private final String tableDivider = "+" +
@@ -13,7 +14,12 @@ public class Ledger {
             "-".repeat(13) + "+";
 
     public Ledger() {
+        this("transactions.csv");
+    }
+
+    public Ledger(String fileName) {
         masterCopy = new ArrayList<>();
+        fileManager = new LedgerFileManager(fileName);
     }
 
     /*-----Methods-----*/

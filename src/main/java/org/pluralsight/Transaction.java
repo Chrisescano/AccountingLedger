@@ -11,6 +11,10 @@ public record Transaction(LocalDateTime timeStamp, String description, String ve
         );
     }
 
+    public String toCSVFormat() {
+        return getDate() + "|" + getTime() + "|" + description() + "|" + vendor() + "|" + amount() + "\n";
+    }
+
     /*-----Getters-----*/
 
     public String getDate() {
@@ -27,10 +31,9 @@ public record Transaction(LocalDateTime timeStamp, String description, String ve
 
     @Override
     public String toString() {
-        return getDate() + "|" +
-                getTime() + "|" +
-                description() + "|" +
-                vendor() + "|" +
-                amount();
+        return "Transaction{timeStamp: " + timeStamp +
+                ", description: " + description +
+                ", vendor: " + vendor +
+                ", amount: " + amount + "}";
     }
 }

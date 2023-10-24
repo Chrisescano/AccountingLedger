@@ -79,7 +79,7 @@ public class Sorter {
         }
         if(!vendor.equals("")) {
             sortedLedger.removeIf(
-                    transaction -> !transaction.description().toLowerCase().contains(vendor.toLowerCase())
+                    transaction -> !transaction.vendor().toLowerCase().contains(vendor.toLowerCase())
             );
         }
         if(!amount.equals("")) {
