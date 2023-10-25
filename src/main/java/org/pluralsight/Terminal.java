@@ -58,6 +58,11 @@ public class Terminal {
         System.out.print(toANSICode(color) + message + ANSI.RESET.terminalCode);
     }
 
+    public static String wrapString(String color, String message) {
+        String colorString = toANSICode(color) + message + ANSI.RESET.terminalCode;
+        return colorString;
+    }
+
     /*-----Private ENUM class----*/
 
     private enum ANSI {

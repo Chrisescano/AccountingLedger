@@ -70,7 +70,7 @@ public class Sorter {
         }
         if(!endDate.equals("")) {
             LocalDateTime endDateTime = ImprovedIO.getDateInput(startDate).atTime(LocalTime.MIN);
-            sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(endDateTime));
+            sortedLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDateTime));
         }
         if(!description.equals("")) {
             sortedLedger.removeIf(

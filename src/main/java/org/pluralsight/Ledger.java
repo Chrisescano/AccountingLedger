@@ -3,12 +3,18 @@ package org.pluralsight;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 
 public class Ledger {
     private final LedgerFileManager fileManager;
     private final ArrayList<Transaction> masterCopy;
-    private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
+    private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.10s |"; // $%10.2f |
+    private final String dateFormat = "%10s";
+    private final String timeFormat = "%8s";
+    private final String descriptionFormat = "%-30.30s";
+    private final String vendorFormat = "%15.15s";
+    private final String amountFormat = "$%10.10s";
     private final String tableDivider = "+" +
             "-".repeat(23) + "+" +
             "-".repeat(32) + "+" +
@@ -22,6 +28,12 @@ public class Ledger {
     public Ledger(String fileName) {
         masterCopy = new ArrayList<>();
         fileManager = new LedgerFileManager(fileName);
+    }
+
+    public static void main(String[] args) {
+        String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
+        String amountFormat = DEFAULT_FORMAT.substring(DEFAULT_FORMAT.indexOf("$") + 1);
+        System.out.println(amountFormat);
     }
 
     /*-----Methods-----*/
@@ -64,7 +76,20 @@ public class Ledger {
     public void displayAsTable(String format, ArrayList<Transaction> ledger) {
         displayTableHeader();
         for(int i = ledger.size() - 1; i >= 0; i--) {
-            displayTableEntry(ledger.get(i).toTableFormat(format));
+            //add code here to format the table
+            String colorizedFormat = ledger.get(i).amount() > -1 ?
+                    Terminal.wrapString("green", amountFormat) :
+                    Terminal.wrapString("red", amountFormat);
+
+            displayTableEntry(String.format(
+                    "| " + dateFormat + " @ " + timeFormat + " | " + descriptionFormat + " | " + vendorFormat + " | " + colorizedFormat + " |",
+                    ledger.get(i).getDate(),
+                    ledger.get(i).getTime(),
+                    ledger.get(i).description(),
+                    ledger.get(i).vendor(),
+                    ledger.get(i).getAmount()
+                    )
+            );
         }
     }
 
