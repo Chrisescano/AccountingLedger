@@ -13,7 +13,7 @@ public class Ledger {
     private final String dateFormat = "%10s";
     private final String timeFormat = "%8s";
     private final String descriptionFormat = "%-30.30s";
-    private final String vendorFormat = "%15.15s";
+    private final String vendorFormat = "%-15.15s";
     private final String amountFormat = "$%10.10s";
     private final String tableDivider = "+" +
             "-".repeat(23) + "+" +
@@ -76,13 +76,11 @@ public class Ledger {
     public void displayAsTable(String format, ArrayList<Transaction> ledger) {
         displayTableHeader();
         for(int i = ledger.size() - 1; i >= 0; i--) {
-            //add code here to format the table
-            String colorizedFormat = ledger.get(i).amount() > -1 ?
-                    Terminal.wrapString("green", amountFormat) :
-                    Terminal.wrapString("red", amountFormat);
+            String amountColor = ledger.get(i).amount() > -1 ? "green" : "red";
+            String tableFormat = colorTableFormat("magenta", "magenta", "", "yellow", amountColor);
 
             displayTableEntry(String.format(
-                    "| " + dateFormat + " @ " + timeFormat + " | " + descriptionFormat + " | " + vendorFormat + " | " + colorizedFormat + " |",
+                    tableFormat,
                     ledger.get(i).getDate(),
                     ledger.get(i).getTime(),
                     ledger.get(i).description(),
@@ -104,6 +102,18 @@ public class Ledger {
     private void displayTableEntry(String tableEntry) {
         System.out.println(tableEntry);
         System.out.println(tableDivider);
+    }
+
+    /*-----Color Table Format-----*/
+
+    private String colorTableFormat(String dateColor, String timeColor, String descriptionColor, String vendorColor, String amountColor) {
+        String cDateFormat = Terminal.wrapString(dateColor, dateFormat);
+        String cTimeFormat = Terminal.wrapString(timeColor, timeFormat);
+        String cDescriptionFormat = Terminal.wrapString(descriptionColor, descriptionFormat);
+        String cVendorFormat = Terminal.wrapString(vendorColor, vendorFormat);
+        String cAmountFormat = Terminal.wrapString(amountColor, amountFormat);
+        return "| " + cDateFormat + " | " + cTimeFormat + " | " + cDescriptionFormat +
+               " | " + cVendorFormat + " | " + cAmountFormat + " |";
     }
 
     /*-----Getters-----*/
