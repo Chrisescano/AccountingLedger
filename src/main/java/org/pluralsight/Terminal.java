@@ -30,7 +30,7 @@ public class Terminal {
         String[] commands = {"  (1) - ","  (2) - ","  (3) - ","  (4) - ","  (5) - ","  (6) - ","  (0) - "};
         String[] descriptions = {"Month to Date","Previous Month","Year to Date","Previous Year","Search by vendor",
                 "Search by custom values","Go back to ledger screen"};
-        printMenu("|==========[ Report Screen ]==========|", commands, descriptions,
+        printMenu("==========[ Report Screen ]==========", commands, descriptions,
                 titleColor, commandColor, descriptionColor
         );
     }

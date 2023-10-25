@@ -103,7 +103,7 @@ public class Main {
     /*-----Sub Menus-----*/
 
     public static void addDeposit() {
-        System.out.println("\nTo post a deposit please provide the following information: ");
+        Terminal.printColor("blue", "\n==========[ Deposit Menu ]==========\n");
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
@@ -118,11 +118,11 @@ public class Main {
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         ledger.save();
-        System.out.println("\nSuccessfully posted to ledger!");
+        Terminal.printColor("green", "\nSuccessfully posted to ledger!\n");
     }
 
     public static void makePayment() {
-        System.out.println("\nTo post a payment please provide the following information");
+        Terminal.printColor("blue", "\n==========[ Payment Screen ]==========\n");
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
@@ -137,13 +137,13 @@ public class Main {
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         ledger.save();
-        System.out.println("\nSuccessfully posted to ledger!");
+        Terminal.printColor("green", "\nSuccessfully posted to ledger!\n");
     }
 
     public static void customSearch() {
         System.out.println("\nTo do a custom search please provide the following information:");
 
-        LocalDateTime startDate = promptDateInput("Search by start date", LocalDate.MIN).atTime(LocalTime.MIN);
+        LocalDateTime startDate = promptDateInput("Search by start date: ", LocalDate.MIN).atTime(LocalTime.MIN);
         LocalDateTime endDate = promptDateInput("Search by end date: ", LocalDate.MAX).atTime(LocalTime.MAX);
         String description = promptStringInput("Search by description: ");
         String vendor = promptStringInput("Search by vendor: ");
@@ -156,31 +156,31 @@ public class Main {
     /*-----User prompt and input methods-----*/
 
     public static String promptStringInput(String prompt) {
-        System.out.print(prompt);
+        Terminal.printColor("yellow", prompt);
         return ImprovedIO.getLineOfInput();
     }
 
     public static double promptDoubleInput(String prompt) {
-        System.out.print(prompt);
+        Terminal.printColor("yellow", prompt);
         return ImprovedIO.getDoubleInput();
     }
 
     public static double promptDoubleInput(String prompt, double defaultDouble) {
-        System.out.print(prompt);
+        Terminal.printColor("yellow", prompt);
         String userDoubleInput = ImprovedIO.getLineOfInput();
         if(userDoubleInput.equals("")) return defaultDouble;
         return ImprovedIO.getDoubleInput();
     }
 
     public static LocalDate promptDateInput(String prompt, LocalDate defaultDate) {
-        System.out.print(prompt);
+        Terminal.printColor("yellow", prompt);
         String userDateInput = ImprovedIO.getLineOfInput();
         if(userDateInput.equals("")) return defaultDate;
         return ImprovedIO.getDateInput(userDateInput);
     }
 
     public static LocalTime promptTimeInput(String prompt, LocalTime defaultTime) {
-        System.out.print(prompt);
+        Terminal.printColor("yellow", prompt);
         String userTimeInput = ImprovedIO.getLineOfInput();
         if(userTimeInput.equals("")) return defaultTime;
         return ImprovedIO.getTimeInput(userTimeInput);
