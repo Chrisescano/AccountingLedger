@@ -40,22 +40,22 @@ public class Main {
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'A' -> {
-                    System.out.println("\nFetching all ledger posts...");
+                    Terminal.printColor("green", "\nFetching All Ledger Transactions...\n");
                     ledger.displayAsTable();
                 }
                 case 'D' -> {
-                    System.out.println("\nFetching all deposits...");
+                    Terminal.printColor("green", "\nFetching All Ledger Deposits...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.depositsOnly(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'P' -> {
-                    System.out.println("\nFetching all payments...");
+                    Terminal.printColor("green", "\nFetching all Ledger Payments...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.paymentsOnly(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
                 case 'H' -> {return;}
-                default -> System.out.println("Sorry, that is not a valid command. Please try again");
+                default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
     }
@@ -66,28 +66,30 @@ public class Main {
             int command = ImprovedIO.getIntInput();
             switch (command) {
                 case 1 -> {
-                    System.out.println("\nFiltering from Month to Date...");
+                    Terminal.printColor("green", "\nFiltering From Month to Date...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.fromMonthToDate(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 2 -> {
-                    System.out.println("\nFiltering last months posts....");
+                    Terminal.printColor("green", "\nFiltering Last Month's Transactions...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.byPreviousMonth(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 3 -> {
-                    System.out.println("\nFiltering from Year to Date...");
+                    Terminal.printColor("green", "\nFiltering From Year to Date...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.fromYearToDate(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 4 -> {
-                    System.out.println("\nFiltering last years posts...");
+                    Terminal.printColor("green", "\nFiltering Last Year's Transactions...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.byPreviousYear(ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 5 -> {
                     String vendorInput = promptStringInput("Search by vendor: ");
-                    System.out.printf("\nFiltering by vendors: %s\n", vendorInput);
+                    Terminal.printColor("green", "\nFiltering for ");
+                    Terminal.printColor("", vendorInput);
+                    Terminal.printColor("green", " vendors...\n");
                     ArrayList<Transaction> sortedLedger = Sorter.byVendor(vendorInput, ledger.getMasterCopy());
                     ledger.displayAsTable(sortedLedger);
                 }
