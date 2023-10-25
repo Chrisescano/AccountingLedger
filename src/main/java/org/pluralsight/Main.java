@@ -19,7 +19,7 @@ public class Main {
 
     public static void homeScreenPrompt() {
         while(true) {
-            TerminalManager.printHomeMenu("BLUE", "CYAN", "");
+            Terminal.printHomeMenu("BLUE", "CYAN", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'D' -> addDeposit();
@@ -36,7 +36,7 @@ public class Main {
 
     public static void ledgerScreenPrompt() {
         while(true) {
-            TerminalManager.printLedgerMenu("blue", "cyan", "");
+            Terminal.printLedgerMenu("blue", "cyan", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'A' -> {
@@ -62,7 +62,7 @@ public class Main {
 
     public static void reportsScreenPrompt() {
         while(true) {
-            TerminalManager.printReportMenu("blue", "cyan", "");
+            Terminal.printReportMenu("blue", "cyan", "");
             int command = ImprovedIO.getIntInput();
             switch (command) {
                 case 1 -> {

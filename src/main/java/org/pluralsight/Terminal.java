@@ -1,6 +1,6 @@
 package org.pluralsight;
 
-public class TerminalManager {
+public class Terminal {
 
     public static void main(String[] args) {
         //printHomeMenu("green", "", "");
