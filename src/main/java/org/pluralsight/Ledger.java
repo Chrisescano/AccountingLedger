@@ -3,21 +3,23 @@ package org.pluralsight;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 
 public class Ledger {
     private final LedgerFileManager fileManager;
     private final ArrayList<Transaction> masterCopy;
-    private String dateFormat = "%10s";
-    private String timeFormat = "%8s";
-    private String descriptionFormat = "%-30.30s";
-    private String vendorFormat = "%-15.15s";
-    private String amountFormat = "$%10.10s";
-    private String dateColor = "cyan";
-    private String timeColor = "yellow";
-    private String descriptionColor = "";
-    private String vendorColor = "";
+
+    private final String dateFormat = "%10s";
+    private final String timeFormat = "%8s";
+    private final String descriptionFormat = "%-30.30s";
+    private final String vendorFormat = "%-15.15s";
+    private final String amountFormat = "$%10.10s";
+
+    private final String tableHeaderColor = "blue";
+    private final String dateColor = "yellow";
+    private final String timeColor = "yellow";
+    private final String descriptionColor = "";
+    private final String vendorColor = "";
     private String amountColor = "";
 
 
@@ -92,9 +94,21 @@ public class Ledger {
 
     private void displayTableHeader() {
         System.out.println(tableDivider);
-        System.out.printf(
-                "| %-10s @ %-8s | %-30s | %-15s | %-11s |\n",
-                "Date", "Time", "Description", "Vendor", "Price");
+        String dateHeaderFormat = Terminal.wrapString("bold",
+                Terminal.wrapString(tableHeaderColor, "%10s"));
+        String timeHeaderFormat = Terminal.wrapString("bold",
+                Terminal.wrapString(tableHeaderColor, "%-8s"));
+        String descriptionHeaderFormat = Terminal.wrapString("bold",
+                Terminal.wrapString(tableHeaderColor, "%-30s"));
+        String vendorHeaderFormat = Terminal.wrapString("bold",
+                Terminal.wrapString(tableHeaderColor, "%-15s"));
+        String amountHeaderFormat = Terminal.wrapString("bold",
+                Terminal.wrapString(tableHeaderColor, "%-11s"));
+        System.out.println(String.format(
+                "| " + dateHeaderFormat + " @ " + timeHeaderFormat + " | " + descriptionHeaderFormat +
+                " | " + vendorHeaderFormat + " | " + amountHeaderFormat + " |",
+                "Date","Time","Description","Vendor","Price"
+        ));
         System.out.println(tableDivider);
     }
 
@@ -107,47 +121,5 @@ public class Ledger {
 
     public ArrayList<Transaction> getMasterCopy() {
         return masterCopy;
-    }
-
-    /*-----Setters-----*/
-
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
-    }
-
-    public void setTimeFormat(String timeFormat) {
-        this.timeFormat = timeFormat;
-    }
-
-    public void setDescriptionFormat(String descriptionFormat) {
-        this.descriptionFormat = descriptionFormat;
-    }
-
-    public void setVendorFormat(String vendorFormat) {
-        this.vendorFormat = vendorFormat;
-    }
-
-    public void setAmountFormat(String amountFormat) {
-        this.amountFormat = amountFormat;
-    }
-
-    public void setDateColor(String dateColor) {
-        this.dateColor = dateColor;
-    }
-
-    public void setTimeColor(String timeColor) {
-        this.timeColor = timeColor;
-    }
-
-    public void setDescriptionColor(String descriptionColor) {
-        this.descriptionColor = descriptionColor;
-    }
-
-    public void setVendorColor(String vendorColor) {
-        this.vendorColor = vendorColor;
-    }
-
-    public void setAmountColor(String amountColor) {
-        this.amountColor = amountColor;
     }
 }

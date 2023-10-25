@@ -3,7 +3,8 @@ package org.pluralsight;
 public class Terminal {
 
     public static void main(String[] args) {
-        //printHomeMenu("green", "", "");
+        String s = wrapString("underline", wrapString("red", "Hello"));
+        System.out.println(s);
     }
 
     /*-----Print Menu Methods------*/
@@ -98,7 +99,8 @@ public class Terminal {
         BLUEBG("\u001B[44m"),
 
         //text formatting
-        BOLD("\u001B[1m");
+        BOLD("\u001B[1m"),
+        UNDERLINE("\u001B[4m");
 
         private final String terminalCode;
 

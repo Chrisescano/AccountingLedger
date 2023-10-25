@@ -6,12 +6,6 @@ import java.time.format.DateTimeFormatter;
 
 public record Transaction(LocalDateTime timeStamp, String description, String vendor, double amount) {
 
-//    public String toTableFormat(String format) {
-//        return String.format(
-//                format, getDate(), getTime(), description(), vendor(), amount()
-//        );
-//    }
-
     public String toCSVFormat() {
         return getDate() + "|" + getTime() + "|" + description() + "|" + vendor() + "|" + amount() + "\n";
     }
