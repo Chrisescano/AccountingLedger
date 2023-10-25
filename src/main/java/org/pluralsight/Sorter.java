@@ -23,7 +23,7 @@ public class Sorter {
     }
 
     public static ArrayList<Transaction> byPreviousMonth(ArrayList<Transaction> ledger) {
-        return filter(getStartOfMonth().minusMonths(1), getStartOfMonth().minusSeconds(1), "", "", 0,
+        return filter(getStartOfMonth().minusMonths(1).minusSeconds(1), getStartOfMonth(), "", "", 0,
                 false, false, ledger);
     }
 
@@ -33,7 +33,7 @@ public class Sorter {
     }
 
     public static ArrayList<Transaction> byPreviousYear(ArrayList<Transaction> ledger) {
-        return filter(getStartOfYear().minusYears(1), getStartOfYear().minusSeconds(1), "", "", 0,
+        return filter(getStartOfYear().minusYears(1).minusSeconds(1), getStartOfYear(), "", "", 0,
                 false, false, ledger);
     }
 
@@ -57,7 +57,7 @@ public class Sorter {
         }
 
         if(!endDateTime.equals(LocalDateTime.MAX)) {
-            filteredLedger.removeIf(transaction -> transaction.timeStamp().isAfter(startDateTime));
+            filteredLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDateTime));
         }
 
         if(!description.equals("")) {

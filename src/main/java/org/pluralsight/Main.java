@@ -9,13 +9,10 @@ public class Main {
     private static final Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-//        ledger.init();
-//        ledger.load();
-//        System.out.println("Welcome to your accounting ledger!");
-//        homeScreenPrompt();
-
-        LocalDateTime mine = LocalDate.MAX.atTime(LocalTime.MAX);
-        System.out.println(LocalDateTime.MAX.isEqual(mine));
+        ledger.init();
+        ledger.load();
+        System.out.println("Welcome to your accounting ledger!");
+        homeScreenPrompt();
     }
 
     /*-----Main Command Menus-----*/
@@ -164,7 +161,7 @@ public class Main {
     }
 
     public static double promptDoubleInput(String prompt) {
-        System.out.println(prompt);
+        System.out.print(prompt);
         return ImprovedIO.getDoubleInput();
     }
 

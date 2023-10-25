@@ -1,1 +1,9 @@
-
+2023-10-25|15:42:29|recent deposit|mcdonalds|1000.0
+2023-10-25|15:27:00|Deposit Info|d vendor|500.0
+2023-10-25|15:27:00|Payment Info|p vendor|-500.0
+2023-10-01|00:00:00|Month to date deposit|mtd vendor|10000.0
+2023-09-30|23:59:59|Last month deposit|lmd vendor|5000.0
+2023-09-01|00:00:00|Last month payment|lmp vendor|-2000.0
+2023-01-01|00:00:00|Year to date deposit|ytd vendor|5000.0
+2022-12-31|23:59:59|Last year payment|lyp vendor|-2045.0
+2022-01-01|00:00:00|Last year deposit|lmd vendor|5000.0
