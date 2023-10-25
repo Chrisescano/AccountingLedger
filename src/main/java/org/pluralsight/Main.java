@@ -19,22 +19,14 @@ public class Main {
 
     public static void homeScreenPrompt() {
         while(true) {
-            System.out.print("""
-
-                    Currently in: Home Screen Menu
-                    Here are the commands you can do:
-                      (D) - Add a deposit
-                      (P) - Make a payment
-                      (L) - View your ledger
-                      (X) - Exit from the program
-                    Type in your command:\s""");
+            TerminalManager.printHomeMenu("blue", "cyan", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'D' -> addDeposit();
                 case 'P' -> makePayment();
                 case 'L' -> ledgerScreenPrompt();
                 case 'X' -> {
-                    System.out.println("You want to exit from the program");
+                    System.out.println("Thank you for visiting. Please come again!");
                     return;
                 }
                 default -> System.out.println("Sorry, that is not a valid command. Please try again");
@@ -44,16 +36,7 @@ public class Main {
 
     public static void ledgerScreenPrompt() {
         while(true) {
-            System.out.print("""
-
-                    Currently in: Ledger Screen Menu
-                    Here are the commands you can do:
-                      (A) - Display all ledger posts
-                      (D) - Display only deposits
-                      (P) - Display only payments
-                      (R) - Filter ledger by pre-defined values
-                      (H) - Go back to the home menu
-                    Type in your command:\s""");
+            TerminalManager.printLedgerMenu("blue", "cyan", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'A' -> {
@@ -79,18 +62,7 @@ public class Main {
 
     public static void reportsScreenPrompt() {
         while(true) {
-            System.out.print("""
-                    
-                    Currently in: Predefined Filter Menu
-                    Here are the commands you can do:
-                      (1) Month to Date
-                      (2) Previous Month
-                      (3) Year to Date
-                      (4) Previous Year
-                      (5) Search by vendor
-                      (6) Search by custom values
-                      (0) Go back to ledger screen
-                    Type in your command:\s""");
+            TerminalManager.printReportMenu("blue", "cyan", "");
             int command = ImprovedIO.getIntInput();
             switch (command) {
                 case 1 -> {
