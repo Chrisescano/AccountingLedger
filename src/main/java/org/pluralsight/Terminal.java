@@ -44,6 +44,20 @@ public class Terminal {
         printColor(titleColor, "Type in your command: ");
     }
 
+    public static String colorTableFormat(
+            String dateColor, String timeColor, String descriptionColor, String vendorColor, String amountColor,
+            String dateFormat, String timeFormat, String descriptionFormat, String vendorFormat, String amountFormat) {
+
+        String cDateFormat = wrapString(dateColor, dateFormat);
+        String cTimeFormat = wrapString(timeColor, timeFormat);
+        String cDescriptionFormat = wrapString(descriptionColor, descriptionFormat);
+        String cVendorFormat = wrapString(vendorColor, vendorFormat);
+        String cAmountFormat = wrapString(amountColor, amountFormat);
+        return "| " + cDateFormat + " @ " + cTimeFormat + " | " + cDescriptionFormat + " | " + cVendorFormat + " | " + cAmountFormat + " |";
+    }
+
+    /*-----Print Text Color Method-----*/
+
     private static String toANSICode(String color) {
         try {
             return ANSI.valueOf(color.toUpperCase()).terminalCode;
@@ -51,8 +65,6 @@ public class Terminal {
             return "";
         }
     }
-
-    /*-----Print Text Color Method-----*/
 
     public static void printColor(String color, String message) {
         System.out.print(toANSICode(color) + message + ANSI.RESET.terminalCode);

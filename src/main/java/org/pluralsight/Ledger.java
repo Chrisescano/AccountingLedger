@@ -9,12 +9,18 @@ import java.util.ArrayList;
 public class Ledger {
     private final LedgerFileManager fileManager;
     private final ArrayList<Transaction> masterCopy;
-    private final String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.10s |"; // $%10.2f |
-    private final String dateFormat = "%10s";
-    private final String timeFormat = "%8s";
-    private final String descriptionFormat = "%-30.30s";
-    private final String vendorFormat = "%-15.15s";
-    private final String amountFormat = "$%10.10s";
+    private String dateFormat = "%10s";
+    private String timeFormat = "%8s";
+    private String descriptionFormat = "%-30.30s";
+    private String vendorFormat = "%-15.15s";
+    private String amountFormat = "$%10.10s";
+    private String dateColor = "cyan";
+    private String timeColor = "yellow";
+    private String descriptionColor = "";
+    private String vendorColor = "";
+    private String amountColor = "";
+
+
     private final String tableDivider = "+" +
             "-".repeat(23) + "+" +
             "-".repeat(32) + "+" +
@@ -28,12 +34,6 @@ public class Ledger {
     public Ledger(String fileName) {
         masterCopy = new ArrayList<>();
         fileManager = new LedgerFileManager(fileName);
-    }
-
-    public static void main(String[] args) {
-        String DEFAULT_FORMAT = "| %10s @ %8s | %-30.30s | %-15.15s | $%10.2f |";
-        String amountFormat = DEFAULT_FORMAT.substring(DEFAULT_FORMAT.indexOf("$") + 1);
-        System.out.println(amountFormat);
     }
 
     /*-----Methods-----*/
@@ -66,18 +66,17 @@ public class Ledger {
     /*-----Display Methods-----*/
 
     public void displayAsTable() {
-        displayAsTable(DEFAULT_FORMAT, masterCopy);
+        displayAsTable(masterCopy);
     }
 
     public void displayAsTable(ArrayList<Transaction> ledger) {
-        displayAsTable(DEFAULT_FORMAT, ledger);
-    }
-
-    public void displayAsTable(String format, ArrayList<Transaction> ledger) {
         displayTableHeader();
         for(int i = ledger.size() - 1; i >= 0; i--) {
-            String amountColor = ledger.get(i).amount() > -1 ? "green" : "red";
-            String tableFormat = colorTableFormat("magenta", "magenta", "", "yellow", amountColor);
+            amountColor = ledger.get(i).amount() > -1 ? "green" : "red";
+            String tableFormat = Terminal.colorTableFormat(
+                    dateColor,timeColor,descriptionColor,vendorColor,amountColor,
+                    dateFormat,timeFormat,descriptionFormat,vendorFormat,amountFormat
+            );
 
             displayTableEntry(String.format(
                     tableFormat,
@@ -104,21 +103,51 @@ public class Ledger {
         System.out.println(tableDivider);
     }
 
-    /*-----Color Table Format-----*/
-
-    private String colorTableFormat(String dateColor, String timeColor, String descriptionColor, String vendorColor, String amountColor) {
-        String cDateFormat = Terminal.wrapString(dateColor, dateFormat);
-        String cTimeFormat = Terminal.wrapString(timeColor, timeFormat);
-        String cDescriptionFormat = Terminal.wrapString(descriptionColor, descriptionFormat);
-        String cVendorFormat = Terminal.wrapString(vendorColor, vendorFormat);
-        String cAmountFormat = Terminal.wrapString(amountColor, amountFormat);
-        return "| " + cDateFormat + " | " + cTimeFormat + " | " + cDescriptionFormat +
-               " | " + cVendorFormat + " | " + cAmountFormat + " |";
-    }
-
     /*-----Getters-----*/
 
     public ArrayList<Transaction> getMasterCopy() {
         return masterCopy;
+    }
+
+    /*-----Setters-----*/
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public void setTimeFormat(String timeFormat) {
+        this.timeFormat = timeFormat;
+    }
+
+    public void setDescriptionFormat(String descriptionFormat) {
+        this.descriptionFormat = descriptionFormat;
+    }
+
+    public void setVendorFormat(String vendorFormat) {
+        this.vendorFormat = vendorFormat;
+    }
+
+    public void setAmountFormat(String amountFormat) {
+        this.amountFormat = amountFormat;
+    }
+
+    public void setDateColor(String dateColor) {
+        this.dateColor = dateColor;
+    }
+
+    public void setTimeColor(String timeColor) {
+        this.timeColor = timeColor;
+    }
+
+    public void setDescriptionColor(String descriptionColor) {
+        this.descriptionColor = descriptionColor;
+    }
+
+    public void setVendorColor(String vendorColor) {
+        this.vendorColor = vendorColor;
+    }
+
+    public void setAmountColor(String amountColor) {
+        this.amountColor = amountColor;
     }
 }
