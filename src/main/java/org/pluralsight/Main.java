@@ -19,7 +19,7 @@ public class Main {
 
     public static void homeScreenPrompt() {
         while(true) {
-            TerminalManager.printHomeMenu("blue", "cyan", "");
+            TerminalManager.printHomeMenu("BLUE", "CYAN", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
                 case 'D' -> addDeposit();
