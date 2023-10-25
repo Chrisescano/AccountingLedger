@@ -9,10 +9,13 @@ public class Main {
     private static final Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
-        ledger.init();
-        ledger.load();
-        System.out.println("Welcome to your accounting ledger!");
-        homeScreenPrompt();
+//        ledger.init();
+//        ledger.load();
+//        System.out.println("Welcome to your accounting ledger!");
+//        homeScreenPrompt();
+
+        LocalDateTime mine = LocalDate.MAX.atTime(LocalTime.MAX);
+        System.out.println(LocalDateTime.MAX.isEqual(mine));
     }
 
     /*-----Main Command Menus-----*/
@@ -143,14 +146,13 @@ public class Main {
     public static void customSearch() {
         System.out.println("\nTo do a custom search please provide the following information:");
 
-        String startDate = promptStringInput("Search by start of date");
-        String endDate = promptStringInput("Search by end date: ");
+        LocalDateTime startDate = promptDateInput("Search by start date", LocalDate.MIN).atTime(LocalTime.MIN);
+        LocalDateTime endDate = promptDateInput("Search by end date: ", LocalDate.MAX).atTime(LocalTime.MAX);
         String description = promptStringInput("Search by description: ");
         String vendor = promptStringInput("Search by vendor: ");
-        String amount = promptStringInput("Search by amount: ");
+        double amount = promptDoubleInput("Search by amount: ", 0);
 
-        ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount,
-                ledger.getMasterCopy());
+        ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount, ledger.getMasterCopy());
         ledger.displayAsTable(sortedLedger);
     }
 
@@ -162,7 +164,14 @@ public class Main {
     }
 
     public static double promptDoubleInput(String prompt) {
+        System.out.println(prompt);
+        return ImprovedIO.getDoubleInput();
+    }
+
+    public static double promptDoubleInput(String prompt, double defaultDouble) {
         System.out.print(prompt);
+        String userDoubleInput = ImprovedIO.getLineOfInput();
+        if(userDoubleInput.equals("")) return defaultDouble;
         return ImprovedIO.getDoubleInput();
     }
 

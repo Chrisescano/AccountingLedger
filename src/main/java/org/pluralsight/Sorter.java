@@ -1,5 +1,6 @@
 package org.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -7,86 +8,86 @@ import java.util.ArrayList;
 public class Sorter {
 
     public static ArrayList<Transaction> depositsOnly(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        sortedLedger.removeIf(transaction -> transaction.amount() < 0);
-        return sortedLedger;
+        return filter(LocalDateTime.MIN, LocalDateTime.MAX, "", "", 0,
+                true, false, ledger);
     }
 
     public static ArrayList<Transaction> paymentsOnly(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        sortedLedger.removeIf(transaction -> transaction.amount() > 0);
-        return sortedLedger;
+        return filter(LocalDateTime.MIN, LocalDateTime.MAX, "", "", 0,
+                false, true, ledger);
     }
 
     public static ArrayList<Transaction> fromMonthToDate(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        LocalDateTime beginningOfMonth = getStartOfMonth();
-
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfMonth));
-        return sortedLedger;
+        return filter(getStartOfMonth(), LocalDateTime.MAX, "", "", 0,
+                false, false, ledger);
     }
 
     public static ArrayList<Transaction> byPreviousMonth(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        LocalDateTime beginningOfLastMonth = getStartOfMonth().minusMonths(1);
-        LocalDateTime endOfLastMonth = getStartOfMonth().minusSeconds(1);
-
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastMonth) ||
-                transaction.timeStamp().isAfter(endOfLastMonth));
-        return sortedLedger;
+        return filter(getStartOfMonth().minusMonths(1), getStartOfMonth().minusSeconds(1), "", "", 0,
+                false, false, ledger);
     }
 
     public static ArrayList<Transaction> fromYearToDate(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        LocalDateTime beginningOfYear = getStartOfYear();
-
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfYear));
-        return sortedLedger;
+        return filter(getStartOfYear(), LocalDateTime.MAX, "", "", 0,
+                false, false, ledger);
     }
 
     public static ArrayList<Transaction> byPreviousYear(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        LocalDateTime beginningOfLastYear = getStartOfYear().minusYears(1);
-        LocalDateTime endOfLastYear = getStartOfYear().minusSeconds(1);
-
-        sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(beginningOfLastYear) ||
-                transaction.timeStamp().isAfter(endOfLastYear));
-        return sortedLedger;
+        return filter(getStartOfYear().minusYears(1), getStartOfYear().minusSeconds(1), "", "", 0,
+                false, false, ledger);
     }
 
     public static ArrayList<Transaction> byVendor(String vendor, ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
-        sortedLedger.removeIf(transaction -> !transaction.vendor().equalsIgnoreCase(vendor));
-        return sortedLedger;
+        return filter(LocalDateTime.MIN, LocalDateTime.MAX, "", vendor, 0,
+                false, false, ledger);
     }
 
-    public static ArrayList<Transaction> byCustomSearch(String startDate, String endDate,
-            String description, String vendor, String amount, ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> sortedLedger = new ArrayList<>(ledger);
+    public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
+            String description, String vendor, double amount, ArrayList<Transaction> ledger) {
 
-        if(!startDate.equals("")) {
-            LocalDateTime startDateTime = ImprovedIO.getDateInput(startDate).atTime(LocalTime.MIN);
-            sortedLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
+        return filter(startDate, endDate, description, vendor, amount, false, false, ledger);
+    }
+
+    public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
+                                                String vendor, double amount, boolean searchDeposits, boolean searchPayments ,
+                                                ArrayList<Transaction> ledger) {
+        ArrayList<Transaction> filteredLedger = new ArrayList<>(ledger);
+        if(!startDateTime.equals(LocalDateTime.MIN)) {
+            filteredLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
         }
-        if(!endDate.equals("")) {
-            LocalDateTime endDateTime = ImprovedIO.getDateInput(startDate).atTime(LocalTime.MIN);
-            sortedLedger.removeIf(transaction -> transaction.timeStamp().isAfter(endDateTime));
+
+        if(!endDateTime.equals(LocalDateTime.MAX)) {
+            filteredLedger.removeIf(transaction -> transaction.timeStamp().isAfter(startDateTime));
         }
+
         if(!description.equals("")) {
-            sortedLedger.removeIf(
+            filteredLedger.removeIf(
                     transaction -> !transaction.description().toLowerCase().contains(description.toLowerCase())
             );
         }
+
         if(!vendor.equals("")) {
-            sortedLedger.removeIf(
+            filteredLedger.removeIf(
                     transaction -> !transaction.vendor().toLowerCase().contains(vendor.toLowerCase())
             );
         }
-        if(!amount.equals("")) {
-            double doubleAmount = ImprovedIO.getDoubleInput(amount);
-            sortedLedger.removeIf(transaction -> transaction.amount() != doubleAmount);
-        }
-        return sortedLedger;
+
+        if(amount != 0 && !searchDeposits && !searchPayments) filteredLedger.removeIf(transaction -> transaction.amount() != amount);
+
+        if(searchDeposits) filteredLedger.removeIf(transaction -> transaction.amount() < 0);
+        else if(searchPayments) filteredLedger.removeIf(transaction -> transaction.amount() > 0);
+
+        return filteredLedger;
+    }
+
+    public static void main(String[] args) {
+        double amount = 1;
+        boolean d = false;
+        boolean p = false;
+
+        if(amount != 0 && !d && !p) System.out.println("filter by amount");
+        if(d) System.out.println("deposits");
+        else if(p) System.out.println("payments");
     }
 
     /*-----Helper Functions-----*/
