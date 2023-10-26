@@ -40,9 +40,8 @@ public class Sorter {
 
     public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
             String description, String vendor, double amount) {
-
-        ArrayList<Transaction> filteredLedger = filter(startDate, endDate, description, vendor, amount,
-                false);
+        boolean flag = amount == 0 ? true : false; //if amount is 0 then set to true to skip filtering by amount, deposits, or payments
+        ArrayList<Transaction> filteredLedger = filter(startDate, endDate, description, vendor, amount, flag);
         sortAlphabetically(filteredLedger);
         return filteredLedger;
     }
@@ -50,7 +49,7 @@ public class Sorter {
     /*-----Filtering Method-----*/
 
     public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
-                                                String vendor, double amount, boolean searchByType) {
+                                                String vendor, double amount, boolean searchByDeposit) {
         ArrayList<Transaction> filteredLedger = new ArrayList<>(ledger);
         if(!startDateTime.equals(LocalDateTime.MIN))
             filteredLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
@@ -68,9 +67,9 @@ public class Sorter {
                     transaction -> !transaction.vendor().toLowerCase().contains(vendor.toLowerCase())
             );
 
-        if(amount != 0 && !searchByType) filteredLedger.removeIf(transaction -> transaction.amount() != amount);
-        else if(searchByType && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() < 0);
-        else if(searchByType && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() > 0);
+        if(amount != 0 && !searchByDeposit) filteredLedger.removeIf(transaction -> transaction.amount() != amount);
+        else if(searchByDeposit && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() < 0);
+        else if(!searchByDeposit && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() > 0);
 
         return filteredLedger;
     }
