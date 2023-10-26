@@ -6,8 +6,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AppCLI {
+
     private static final Ledger ledger = new Ledger();
-    //private static final Sorter sorter = new Sorter(ledger.getMasterCopy());
 
     public static void main(String[] args) {
         new Sorter(ledger.getMasterCopy());

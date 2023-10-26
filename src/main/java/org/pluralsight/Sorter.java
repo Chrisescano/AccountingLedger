@@ -89,7 +89,7 @@ public class Sorter {
         Collections.sort(filteredLedger, new Comparator<Transaction>() {
             @Override
             public int compare(Transaction o1, Transaction o2) {
-                return o1.vendor().compareTo(o2.vendor());
+                return o2.vendor().compareTo(o1.vendor());
             }
         });
     }
