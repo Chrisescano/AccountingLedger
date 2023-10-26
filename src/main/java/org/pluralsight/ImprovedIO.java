@@ -13,11 +13,11 @@ public class ImprovedIO {
     /*-----I/O Methods-----*/
 
     public static String getLineOfInput() {
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public static String getWordOfInput() {
-        String input = scanner.next();
+        String input = scanner.next().trim();
         scanner.nextLine();
         return input;
     }
@@ -42,26 +42,14 @@ public class ImprovedIO {
     }
 
     public static double getDoubleInput() {
-        double input;
         while(true) {
             try {
-                input = scanner.nextDouble();
+                double input = scanner.nextDouble();
                 scanner.nextLine();
-                break;
+                return input;
             } catch(InputMismatchException e) {
                 System.out.println("Oops, expecting an decimal value. Please try again");
                 scanner.nextLine();
-            }
-        }
-        return input;
-    }
-
-    public static double getDoubleInput(String userInput) {
-        while(true) {
-            try {
-                return Double.parseDouble(userInput);
-            } catch(InputMismatchException e) {
-                System.out.println("Oops, expecting an decimal value. Please try again");
             }
         }
     }

@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class Main {
+public class AppCLI {
     private static final Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
         ledger.init();
         ledger.load();
-        System.out.println("Welcome to your accounting ledger!");
+        Terminal.printColor("blue", "Welcome to your accounting ledger!\n");
         homeScreenPrompt();
     }
 

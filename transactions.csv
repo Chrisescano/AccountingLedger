@@ -1,60 +1,60 @@
-2019-04-13|22:15:48|Bookstore purchase|Book Emporium|-$42.99
-2022-10-29|04:50:37|Coffee with a friend|Cafe Java|$12.75
-2020-12-18|13:09:55|Electricity bill|PowerCo|-$85.00
-2017-06-25|08:40:21|Pharmacy expenses|MediPharm|-$55.30
-2021-11-02|15:31:02|Bonus payment|ABC Company|$1,000.00
-2018-03-08|19:17:42|Gym membership|Fitness Center|-$50.00
-2023-01-07|11:59:03|Gift shopping|Gift World|-$30.50
-2022-03-14|10:21:29|Lunch meeting|Deli Delight|$24.75
-2017-02-04|16:38:15|Internet bill|ISP Inc.|-$70.00
-2020-07-27|08:06:57|Car insurance|AutoInsure|-$200.00
-2019-05-16|14:22:30|Movie night|CinemaPlex|-$20.00
-2021-08-10|12:45:11|Home rent|Landlord|$1,400.00
-2018-04-05|17:11:34|Pet supplies|Pet Store|-$35.80
-2023-05-23|09:57:46|Grocery shopping|LocalMart|-$55.25
-2019-06-08|13:33:52|Dinner celebration|Gourmet Grill|$75.50
-2020-02-21|20:02:28|Water bill|AquaCorp|-$40.00
-2017-09-02|07:28:17|Gasoline purchase|Gas Station|-$30.25
-2022-12-30|15:45:39|Freelance income|Client XYZ|$1,200.00
-2018-08-19|19:20:55|Online shopping|SuperStore|-$120.99
-2021-01-16|08:14:46|Medical checkup|City Clinic|-$75.00
-2017-11-05|14:02:29|Vacation expenses|Travel Agency|-$500.00
-2023-07-14|11:36:21|Monthly salary|ABC Company|$3,000.00
-2019-02-17|10:10:05|Clothing shopping|FashionStore|-$65.20
-2020-10-08|16:28:14|Bookstore purchase|Book Emporium|-$24.99
-2021-05-12|09:48:30|Coffee with a friend|Cafe Java|$10.75
-2018-12-03|14:55:29|Electricity bill|PowerCo|-$95.00
-2017-04-19|07:40:42|Pharmacy expenses|MediPharm|-$45.30
-2022-08-28|12:59:17|Bonus payment|ABC Company|$750.00
-2020-11-25|18:17:08|Gym membership|Fitness Center|-$55.00
-2019-03-13|19:21:34|Gift shopping|Gift World|-$40.50
-2023-02-02|08:02:47|Lunch meeting|Deli Delight|$22.75
-2018-09-15|16:49:56|Internet bill|ISP Inc.|-$75.00
-2017-10-10|11:30:33|Car insurance|AutoInsure|-$190.00
-2021-07-03|10:45:14|Movie night|CinemaPlex|-$15.00
-2019-07-16|20:55:01|Home rent|Landlord|$1,350.00
-2018-05-29|14:36:57|Pet supplies|Pet Store|-$28.80
-2020-03-27|09:40:22|Grocery shopping|LocalMart|-$60.25
-2023-06-11|12:15:43|Dinner celebration|Gourmet Grill|$85.50
-2021-09-21|17:29:55|Water bill|AquaCorp|-$35.00
-2017-12-22|08:47:34|Gasoline purchase|Gas Station|-$35.25
-2022-04-04|14:11:02|Freelance income|Client XYZ|$1,000.00
-2018-06-06|19:44:27|Online shopping|SuperStore|-$110.99
-2020-08-13|10:05:39|Medical checkup|City Clinic|-$85.00
-2019-01-20|16:30:15|Vacation expenses|Travel Agency|-$600.00
-2023-01-29|15:25:58|Monthly salary|ABC Company|$2,800.00
-2017-03-18|12:10:47|Clothing shopping|FashionStore|-$75.20
-2020-12-14|20:24:35|Bookstore purchase|Book Emporium|-$38.99
-2021-03-06|08:58:14|Coffee with a friend|Cafe Java|$15.75
-2018-11-09|13:19:29|Electricity bill|PowerCo|-$75.00
-2017-05-01|09:40:22|Pharmacy expenses|MediPharm|-$50.30
-2022-09-22|17:11:44|Bonus payment|ABC Company|$850.00
-2023-03-31|10:33:52|Gym membership|Fitness Center|-$60.00
-2019-08-07|18:02:07|Gift shopping|Gift World|-$45.50
-2020-01-27|12:47:59|Lunch meeting|Deli Delight|$20.75
-2018-04-15|20:36:28|Internet bill|ISP Inc.|-$80.00
-2017-08-26|14:15:01|Car insurance|AutoInsure|-$220.00
-2022-02-13|09:18:33|Movie night|CinemaPlex|-$18.00
-2021-10-16|16:19:17|Home rent|Landlord|$1,250.00
-2018-07-01|13:31:40|Pet supplies|Pet Store|-$25.80
-2023-06-15|11:15:08|Grocery shopping|LocalMart|-$65.25
+2019-04-13|22:15:48|Bookstore purchase|Book Emporium|-42.99
+2022-10-29|04:50:37|Coffee with a friend|Cafe Java|12.75
+2020-12-18|13:09:55|Electricity bill|PowerCo|-85.00
+2017-06-25|08:40:21|Pharmacy expenses|MediPharm|-55.30
+2021-11-02|15:31:02|Bonus payment|ABC Company|1000.00
+2018-03-08|19:17:42|Gym membership|Fitness Center|-50.00
+2023-01-07|11:59:03|Gift shopping|Gift World|-30.50
+2022-03-14|10:21:29|Lunch meeting|Deli Delight|24.75
+2017-02-04|16:38:15|Internet bill|ISP Inc.|-70.00
+2020-07-27|08:06:57|Car insurance|AutoInsure|-200.00
+2019-05-16|14:22:30|Movie night|CinemaPlex|-20.00
+2021-08-10|12:45:11|Home rent|Landlord|1400.00
+2018-04-05|17:11:34|Pet supplies|Pet Store|-35.80
+2023-05-23|09:57:46|Grocery shopping|LocalMart|-55.25
+2019-06-08|13:33:52|Dinner celebration|Gourmet Grill|75.50
+2020-02-21|20:02:28|Water bill|AquaCorp|-40.00
+2017-09-02|07:28:17|Gasoline purchase|Gas Station|-30.25
+2022-12-30|15:45:39|Freelance income|Client XYZ|1200.00
+2018-08-19|19:20:55|Online shopping|SuperStore|-120.99
+2021-01-16|08:14:46|Medical checkup|City Clinic|-75.00
+2017-11-05|14:02:29|Vacation expenses|Travel Agency|-500.00
+2023-07-14|11:36:21|Monthly salary|ABC Company|3000.00
+2019-02-17|10:10:05|Clothing shopping|FashionStore|-65.20
+2020-10-08|16:28:14|Bookstore purchase|Book Emporium|-24.99
+2021-05-12|09:48:30|Coffee with a friend|Cafe Java|10.75
+2018-12-03|14:55:29|Electricity bill|PowerCo|-95.00
+2017-04-19|07:40:42|Pharmacy expenses|MediPharm|-45.30
+2022-08-28|12:59:17|Bonus payment|ABC Company|750.00
+2020-11-25|18:17:08|Gym membership|Fitness Center|-55.00
+2019-03-13|19:21:34|Gift shopping|Gift World|-40.50
+2023-02-02|08:02:47|Lunch meeting|Deli Delight|22.75
+2018-09-15|16:49:56|Internet bill|ISP Inc.|-75.00
+2017-10-10|11:30:33|Car insurance|AutoInsure|-190.00
+2021-07-03|10:45:14|Movie night|CinemaPlex|-15.00
+2019-07-16|20:55:01|Home rent|Landlord|1350.00
+2018-05-29|14:36:57|Pet supplies|Pet Store|-28.80
+2020-03-27|09:40:22|Grocery shopping|LocalMart|-60.25
+2023-06-11|12:15:43|Dinner celebration|Gourmet Grill|85.50
+2021-09-21|17:29:55|Water bill|AquaCorp|-35.00
+2017-12-22|08:47:34|Gasoline purchase|Gas Station|-35.25
+2022-04-04|14:11:02|Freelance income|Client XYZ|1000.00
+2018-06-06|19:44:27|Online shopping|SuperStore|-110.99
+2020-08-13|10:05:39|Medical checkup|City Clinic|-85.00
+2019-01-20|16:30:15|Vacation expenses|Travel Agency|-600.00
+2023-01-29|15:25:58|Monthly salary|ABC Company|2800.00
+2017-03-18|12:10:47|Clothing shopping|FashionStore|-75.20
+2020-12-14|20:24:35|Bookstore purchase|Book Emporium|-38.99
+2021-03-06|08:58:14|Coffee with a friend|Cafe Java|15.75
+2018-11-09|13:19:29|Electricity bill|PowerCo|-75.00
+2017-05-01|09:40:22|Pharmacy expenses|MediPharm|-50.30
+2022-09-22|17:11:44|Bonus payment|ABC Company|850.00
+2023-03-31|10:33:52|Gym membership|Fitness Center|-60.00
+2019-08-07|18:02:07|Gift shopping|Gift World|-45.50
+2020-01-27|12:47:59|Lunch meeting|Deli Delight|20.75
+2018-04-15|20:36:28|Internet bill|ISP Inc.|-80.00
+2017-08-26|14:15:01|Car insurance|AutoInsure|-220.00
+2022-02-13|09:18:33|Movie night|CinemaPlex|-18.00
+2021-10-16|16:19:17|Home rent|Landlord|1250.00
+2018-07-01|13:31:40|Pet supplies|Pet Store|-25.80
+2023-06-15|11:15:08|Grocery shopping|LocalMart|-65.25

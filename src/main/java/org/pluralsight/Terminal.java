@@ -2,11 +2,6 @@ package org.pluralsight;
 
 public class Terminal {
 
-    public static void main(String[] args) {
-        String s = wrapString("underline", wrapString("red", "Hello"));
-        System.out.println(s);
-    }
-
     /*-----Print Menu Methods------*/
     public static void printHomeMenu(String titleColor, String commandColor, String descriptionColor) {
         String[] commands = {"  (D) - ", "  (P) - ", "  (L) - ", "  (X) - "};
