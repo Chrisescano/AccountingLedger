@@ -20,7 +20,7 @@ public class TimeManager {
         };
     }
 
-    public static LocalDateTime toLocalDateTime(LocalDate date, LocalTime time) {
-        return date.atTime(time);
+    public static LocalDateTime toLocalDateTime(LocalDate date, boolean isMinTime) {
+        return isMinTime ? date.atTime(LocalTime.MIN) : date.atTime(LocalTime.MAX);
     }
 }

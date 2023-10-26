@@ -115,6 +115,20 @@ public class Sorter {
 
     /*-----Filtering Method-----*/
 
+    public static ArrayList<Transaction> filterByMonth(LocalDateTime startDate, LocalDateTime endDate, ArrayList<Transaction> ledger) {
+        ArrayList<Transaction> filteredLedger = filter(
+                startDate,
+                endDate,
+                "",
+                "",
+                0,
+                false,
+                false,
+                ledger
+        );
+        return sortByDateTime(filteredLedger);
+    }
+
     public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
                                                 String vendor, double amount, boolean searchDeposits, boolean searchPayments ,
                                                 ArrayList<Transaction> ledger) {
