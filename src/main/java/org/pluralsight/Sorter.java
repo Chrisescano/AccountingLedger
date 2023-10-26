@@ -7,7 +7,13 @@ import java.util.Comparator;
 
 public class Sorter {
 
-    public static ArrayList<Transaction> depositsOnly(ArrayList<Transaction> ledger) {
+    private static ArrayList<Transaction> ledger;
+
+    public Sorter(ArrayList<Transaction> ledger) {
+        this.ledger = ledger;
+    }
+
+    public static ArrayList<Transaction> depositsOnly() {
         ArrayList<Transaction> filteredLedger = filter(
                 LocalDateTime.MIN,
                 LocalDateTime.MAX,
@@ -15,13 +21,12 @@ public class Sorter {
                 "",
                 0,
                 true,
-                false,
-                ledger
+                false
         );
         return sortByDateTime(filteredLedger);
     }
 
-    public static ArrayList<Transaction> paymentsOnly(ArrayList<Transaction> ledger) {
+    public static ArrayList<Transaction> paymentsOnly() {
         ArrayList<Transaction> filteredLedger = filter(
                 LocalDateTime.MIN,
                 LocalDateTime.MAX,
@@ -29,69 +34,20 @@ public class Sorter {
                 "",
                 0,
                 false,
-                true,
-                ledger
+                true
         );
         return sortByDateTime(filteredLedger);
     }
 
-    public static ArrayList<Transaction> fromMonthToDate(ArrayList<Transaction> ledger) {
+    public static ArrayList<Transaction> filterByDate(LocalDateTime date, boolean isMonthRange) {
+        LocalDateTime[] dates = isMonthRange ? TimeManager.monthRangeOf(date) : TimeManager.yearRangeOf(date);
         ArrayList<Transaction> filteredLedger = filter(
-                getStartOfMonth(),
-                LocalDateTime.MAX,
-                "",
-                "",
-                0,
-                false,
-                false,
-                ledger
+                dates[0], dates[1], "", "", 0, false, false
         );
         return sortByDateTime(filteredLedger);
     }
 
-    public static ArrayList<Transaction> byPreviousMonth(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> filteredLedger = filter(
-                getStartOfMonth().minusMonths(1).minusSeconds(1),
-                getStartOfMonth(),
-                "",
-                "",
-                0,
-                false,
-                false,
-                ledger
-        );
-        return sortByDateTime(filteredLedger);
-    }
-
-    public static ArrayList<Transaction> fromYearToDate(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> filteredLedger = filter(
-                getStartOfYear(),
-                LocalDateTime.MAX,
-                "",
-                "",
-                0,
-                false,
-                false,
-                ledger
-        );
-        return sortByDateTime(filteredLedger);
-    }
-
-    public static ArrayList<Transaction> byPreviousYear(ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> filteredLedger = filter(
-                getStartOfYear().minusYears(1).minusSeconds(1),
-                getStartOfYear(),
-                "",
-                "",
-                0,
-                false,
-                false,
-                ledger
-        );
-        return sortByDateTime(filteredLedger);
-    }
-
-    public static ArrayList<Transaction> byVendor(String vendor, ArrayList<Transaction> ledger) {
+    public static ArrayList<Transaction> byVendor(String vendor) {
         ArrayList<Transaction> filteredLedger = filter(
                 LocalDateTime.MIN,
                 LocalDateTime.MAX,
@@ -99,8 +55,7 @@ public class Sorter {
                 vendor,
                 0,
                 false,
-                false,
-                ledger
+                false
         );
         return sortAlphabetically(filteredLedger);
     }
@@ -109,29 +64,14 @@ public class Sorter {
             String description, String vendor, double amount, ArrayList<Transaction> ledger) {
 
         ArrayList<Transaction> filteredLedger = filter(startDate, endDate, description, vendor, amount,
-                false, false, ledger);
+                false, false);
         return sortAlphabetically(filteredLedger);
     }
 
     /*-----Filtering Method-----*/
 
-    public static ArrayList<Transaction> filterByMonth(LocalDateTime startDate, LocalDateTime endDate, ArrayList<Transaction> ledger) {
-        ArrayList<Transaction> filteredLedger = filter(
-                startDate,
-                endDate,
-                "",
-                "",
-                0,
-                false,
-                false,
-                ledger
-        );
-        return sortByDateTime(filteredLedger);
-    }
-
     public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
-                                                String vendor, double amount, boolean searchDeposits, boolean searchPayments ,
-                                                ArrayList<Transaction> ledger) {
+                                                String vendor, double amount, boolean searchDeposits, boolean searchPayments) {
         ArrayList<Transaction> filteredLedger = new ArrayList<>(ledger);
         if(!startDateTime.equals(LocalDateTime.MIN))
             filteredLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
@@ -177,29 +117,5 @@ public class Sorter {
             }
         });
         return filteredLedger;
-    }
-
-    /*-----Helper Functions-----*/
-
-    private static LocalDateTime getStartOfMonth() {
-        return LocalDateTime.of(
-                LocalDateTime.now().getYear(),
-                LocalDateTime.now().getMonth(),
-                1,
-                0,
-                0,
-                0
-        );
-    }
-
-    private static LocalDateTime getStartOfYear() {
-        return LocalDateTime.of(
-                LocalDateTime.now().getYear(),
-                1,
-                1,
-                0,
-                0,
-                0
-        );
     }
 }

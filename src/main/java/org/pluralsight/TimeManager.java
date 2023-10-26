@@ -6,21 +6,19 @@ import java.time.LocalTime;
 
 public class TimeManager {
 
-    public static LocalDate[] getStartAndEndOfMonth(int year, int month) {
-        LocalDate beginningOfMonth = LocalDate.of(year, month, 1);
-        return new LocalDate[] {
-                beginningOfMonth, beginningOfMonth.plusMonths(1).minusDays(1)
+    public static LocalDateTime[] monthRangeOf(LocalDateTime date) {
+        LocalDate beginningOfMonth = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+        return new LocalDateTime[] {
+                beginningOfMonth.atTime(LocalTime.MIN),
+                beginningOfMonth.plusMonths(1).minusDays(1).atTime(LocalTime.MAX)
         };
     }
 
-    public static LocalDate[] getStartAndEndOfYear(int year) {
-        LocalDate beginningOfYear = LocalDate.of(year, 1, 1);
-        return new LocalDate[] {
-                beginningOfYear, beginningOfYear.plusYears(1).minusDays(1)
+    public static LocalDateTime[] yearRangeOf(LocalDateTime date) {
+        LocalDate beginningOfYear = LocalDate.of(date.getYear(), 1, 1);
+        return new LocalDateTime[] {
+                beginningOfYear.atTime(LocalTime.MIN),
+                beginningOfYear.plusYears(1).minusDays(1).atTime(LocalTime.MAX)
         };
-    }
-
-    public static LocalDateTime toLocalDateTime(LocalDate date, boolean isMinTime) {
-        return isMinTime ? date.atTime(LocalTime.MIN) : date.atTime(LocalTime.MAX);
     }
 }
