@@ -25,8 +25,8 @@ public class AppCLI {
             Terminal.printHomeMenu("BLUE", "CYAN", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
-                case 'D' -> addDeposit();
-                case 'P' -> makePayment();
+                case 'D' -> makeTransaction(true);
+                case 'P' -> makeTransaction(false);
                 case 'L' -> ledgerScreenPrompt();
                 case 'X' -> {
                     System.out.println("Thank you for visiting. Please come again!");
@@ -48,12 +48,12 @@ public class AppCLI {
                 }
                 case 'D' -> {
                     Terminal.printColor("green", "\nFetching All Ledger Deposits...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.depositsOnly();
+                    ArrayList<Transaction> sortedLedger = Sorter.filterByTransactionType(true);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'P' -> {
                     Terminal.printColor("green", "\nFetching all Ledger Payments...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.paymentsOnly();
+                    ArrayList<Transaction> sortedLedger = Sorter.filterByTransactionType(false);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
@@ -105,27 +105,9 @@ public class AppCLI {
 
     /*-----Sub Menus-----*/
 
-    public static void addDeposit() {
-        Terminal.printColor("blue", "\n==========[ Deposit Menu ]==========\n");
-
-        LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
-                LocalDate.now());
-        LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ",
-                LocalTime.now());
-        String descriptionInput = promptStringInput("Details(what was it for): ");
-        String vendorInput = promptStringInput("Deposit from: ");
-        double amountInput = promptDoubleInput("Amount: ");
-
-        LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
-        if(amountInput < 0) amountInput *= -1;
-
-        ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
-        ledger.save();
-        Terminal.printColor("green", "\nSuccessfully posted to ledger!\n");
-    }
-
-    public static void makePayment() {
-        Terminal.printColor("blue", "\n==========[ Payment Screen ]==========\n");
+    public static void makeTransaction(boolean isDeposit) {
+        String screenTitle = isDeposit ? "Deposit Screen" : "Payment Screen";
+        Terminal.printColor("blue", "\n==========[ "+ screenTitle + " ]==========\n");
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
@@ -136,7 +118,8 @@ public class AppCLI {
         double amountInput = promptDoubleInput("Amount: ");
 
         LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
-        if(amountInput > 0) amountInput *= -1;
+        if(isDeposit && amountInput < 0) amountInput *= 1;
+        if(!isDeposit && amountInput > 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         ledger.save();
@@ -152,7 +135,7 @@ public class AppCLI {
         String vendor = promptStringInput("Search by vendor: ");
         double amount = promptDoubleInput("Search by amount: ", 0);
 
-        ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount, ledger.getMasterCopy());
+        ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount);
         ledger.displayAsTable(sortedLedger);
     }
 

@@ -9,10 +9,6 @@ public class LedgerStats {
 
     private static ArrayList<Transaction> ledger;
 
-    public static void main(String[] args) {
-        yearlySummary(2023);
-    }
-
     public LedgerStats(ArrayList<Transaction> ledger) {
         this.ledger = ledger;
     }
@@ -23,14 +19,14 @@ public class LedgerStats {
     }
 
     //we can loop for all months of the year, and ask the user for the year and month
-    public static void monthlySummary(int year, int month) {
-        LocalDate[] dateRange = TimeManager.getStartAndEndOfMonth(year, month);
-
-
-    }
-
-    public static void yearlySummary(int year) {
-        LocalDate[] yearRange = TimeManager.getStartAndEndOfYear(year);
-
-    }
+//    public static void monthlySummary(int year, int month) {
+//        LocalDate[] dateRange = TimeManager.getStartAndEndOfMonth(year, month);
+//
+//
+//    }
+//
+//    public static void yearlySummary(int year) {
+//        LocalDate[] yearRange = TimeManager.getStartAndEndOfYear(year);
+//
+//    }
 }

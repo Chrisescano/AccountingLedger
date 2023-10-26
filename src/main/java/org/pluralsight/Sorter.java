@@ -13,65 +13,44 @@ public class Sorter {
         this.ledger = ledger;
     }
 
-    public static ArrayList<Transaction> depositsOnly() {
+    public static ArrayList<Transaction> filterByTransactionType(boolean onlyDeposits) {
         ArrayList<Transaction> filteredLedger = filter(
-                LocalDateTime.MIN,
-                LocalDateTime.MAX,
-                "",
-                "",
-                0,
-                true,
-                false
+                LocalDateTime.MIN, LocalDateTime.MAX, "", "", 0, onlyDeposits
         );
-        return sortByDateTime(filteredLedger);
-    }
-
-    public static ArrayList<Transaction> paymentsOnly() {
-        ArrayList<Transaction> filteredLedger = filter(
-                LocalDateTime.MIN,
-                LocalDateTime.MAX,
-                "",
-                "",
-                0,
-                false,
-                true
-        );
-        return sortByDateTime(filteredLedger);
+        sortByDateTime(filteredLedger);
+        return filteredLedger;
     }
 
     public static ArrayList<Transaction> filterByDate(LocalDateTime date, boolean isMonthRange) {
         LocalDateTime[] dates = isMonthRange ? TimeManager.monthRangeOf(date) : TimeManager.yearRangeOf(date);
         ArrayList<Transaction> filteredLedger = filter(
-                dates[0], dates[1], "", "", 0, false, false
+                dates[0], dates[1], "", "", 1, true
         );
-        return sortByDateTime(filteredLedger);
+        sortByDateTime(filteredLedger);
+        return filteredLedger;
     }
 
     public static ArrayList<Transaction> byVendor(String vendor) {
         ArrayList<Transaction> filteredLedger = filter(
-                LocalDateTime.MIN,
-                LocalDateTime.MAX,
-                "",
-                vendor,
-                0,
-                false,
-                false
+                LocalDateTime.MIN, LocalDateTime.MAX, "", vendor, 1, true
         );
-        return sortAlphabetically(filteredLedger);
+        sortAlphabetically(filteredLedger);
+        return filteredLedger;
     }
 
     public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
-            String description, String vendor, double amount, ArrayList<Transaction> ledger) {
+            String description, String vendor, double amount) {
 
         ArrayList<Transaction> filteredLedger = filter(startDate, endDate, description, vendor, amount,
-                false, false);
-        return sortAlphabetically(filteredLedger);
+                false);
+        sortAlphabetically(filteredLedger);
+        return filteredLedger;
     }
 
     /*-----Filtering Method-----*/
 
     public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
-                                                String vendor, double amount, boolean searchDeposits, boolean searchPayments) {
+                                                String vendor, double amount, boolean searchByType) {
         ArrayList<Transaction> filteredLedger = new ArrayList<>(ledger);
         if(!startDateTime.equals(LocalDateTime.MIN))
             filteredLedger.removeIf(transaction -> transaction.timeStamp().isBefore(startDateTime));
@@ -89,33 +68,30 @@ public class Sorter {
                     transaction -> !transaction.vendor().toLowerCase().contains(vendor.toLowerCase())
             );
 
-        if(amount != 0 && !searchDeposits && !searchPayments) filteredLedger.removeIf(transaction -> transaction.amount() != amount);
-
-        if(searchDeposits) filteredLedger.removeIf(transaction -> transaction.amount() < 0);
-        else if(searchPayments) filteredLedger.removeIf(transaction -> transaction.amount() > 0);
+        if(amount != 0 && !searchByType) filteredLedger.removeIf(transaction -> transaction.amount() != amount);
+        else if(searchByType && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() < 0);
+        else if(searchByType && amount == 0) filteredLedger.removeIf(transaction -> transaction.amount() > 0);
 
         return filteredLedger;
     }
 
     /*-----Sorting Methods-----*/
 
-    public static ArrayList<Transaction> sortByDateTime(ArrayList<Transaction> filteredLedger) {
+    public static void sortByDateTime(ArrayList<Transaction> filteredLedger) {
         Collections.sort(filteredLedger, new Comparator<Transaction>() {
             @Override
             public int compare(Transaction o1, Transaction o2) {
                 return o1.timeStamp().compareTo(o2.timeStamp());
             }
         });
-        return filteredLedger;
     }
 
-    public static ArrayList<Transaction> sortAlphabetically(ArrayList<Transaction> filteredLedger) {
+    public static void sortAlphabetically(ArrayList<Transaction> filteredLedger) {
         Collections.sort(filteredLedger, new Comparator<Transaction>() {
             @Override
             public int compare(Transaction o1, Transaction o2) {
                 return o1.vendor().compareTo(o2.vendor());
             }
         });
-        return filteredLedger;
     }
 }
