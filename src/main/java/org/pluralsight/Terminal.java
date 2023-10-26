@@ -13,9 +13,9 @@ public class Terminal {
     }
 
     public static void printLedgerMenu(String titleColor, String commandColor, String descriptionColor) {
-        String[] commands = {"  (A) - ", "  (D) - ", "  (P) - ", "  (R) - ", "  (H) - "};
+        String[] commands = {"  (A) - ", "  (D) - ", "  (P) - ", "  (R) - ", "  (S) - ","  (H) - "};
         String[] descriptions = {"Display all ledger posts","Display only deposits","Display only payments",
-                "Filter ledger by pre-defined values","Go back to the home menu"};
+                "Filter ledger by pre-defined values","View Your Ledger Statistics","Go back to the home menu"};
         printMenu("==========[ Ledger Screen ]==========", commands, descriptions,
                 titleColor, commandColor, descriptionColor
         );
@@ -26,6 +26,15 @@ public class Terminal {
         String[] descriptions = {"Month to Date","Previous Month","Year to Date","Previous Year","Search by vendor",
                 "Search by custom values","Go back to ledger screen"};
         printMenu("==========[ Report Screen ]==========", commands, descriptions,
+                titleColor, commandColor, descriptionColor
+        );
+    }
+
+    public static void printStatsMenu(String titleColor, String commandColor, String descriptionColor) {
+        String[] commands = {"  (1) - ","  (2) - ","  (3) - ","  (4) - ","  (5) - ","  (6) - "};
+        String[] descriptions = {"Total Balance","Monthly Summary","Yearly Summary","Detailed Yearly Summary",
+                "Debt To Income Ratio","Go back to ledger screen"};
+        printMenu("==========[ Statistics Menu ]==========", commands, descriptions,
                 titleColor, commandColor, descriptionColor
         );
     }

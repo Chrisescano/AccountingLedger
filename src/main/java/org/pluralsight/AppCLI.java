@@ -58,6 +58,7 @@ public class AppCLI {
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
+                case 'S' -> statsScreenPrompt();
                 case 'H' -> {return;}
                 default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
@@ -99,7 +100,23 @@ public class AppCLI {
                 }
                 case 6 -> customSearch();
                 case 0 -> {return;}
-                default -> System.out.println("Sorry, that is not a valid command. Please try again");
+                default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
+            }
+        }
+    }
+
+    public static void statsScreenPrompt() {
+        while(true) {
+            Terminal.printStatsMenu("blue", "cyan", "");
+            int command = ImprovedIO.getIntInput();
+            switch (command) {
+                case 1 -> System.out.println("Get total balance");
+                case 2 -> System.out.println("get monthly summary");
+                case 3 -> System.out.println("get yearly summary");
+                case 4 -> System.out.println("get detailed yearly summary");
+                case 5 -> System.out.println("get debt to income ratio");
+                case 6 -> { return; }
+                default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
     }
