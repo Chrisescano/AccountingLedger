@@ -13,6 +13,8 @@ public class LedgerStats {
         this.ledger = ledger;
     }
 
+    /*-----Methods-----*/
+
     public static double[] monthlySummary(LocalDateTime date) {
         ArrayList<Transaction> filteredLedger = Sorter.byDate(date, true);
         return  calculateBalances(filteredLedger);
@@ -23,15 +25,27 @@ public class LedgerStats {
         return calculateBalances(filteredLedger);
     }
 
+    public static double[][] detailedYearlySummary(LocalDateTime date) {
+        double[][] detailed = new double[12][3];
+        for(int i = 0; i < 12; i++) {
+            LocalDateTime dateByMonth = LocalDate.of(date.getYear(), i + 1, 1).atTime(LocalTime.MIN);
+            ArrayList<Transaction> filteredLedger = Sorter.byDate(dateByMonth, true);
+            double[] balancesForThatMonth = calculateBalances(filteredLedger);
+            detailed[i][0] = balancesForThatMonth[0];
+            detailed[i][1] = balancesForThatMonth[1];
+            detailed[i][2] = balancesForThatMonth[2];
+        }
+        return detailed;
+    }
+
     /*-----Helper Methods-----*/
 
-    private static double[] calculateBalances() {
+    public static double[] calculateBalances() {
         return calculateBalances(ledger);
     }
 
-    private static double[] calculateBalances(ArrayList<Transaction> ledger) {
+    public static double[] calculateBalances(ArrayList<Transaction> ledger) {
         double depositTotal = 0, paymentTotal = 0;
-
         for(Transaction transaction : ledger) {
             if(transaction.amount() > 0) depositTotal += transaction.amount();
             else paymentTotal += transaction.amount();
