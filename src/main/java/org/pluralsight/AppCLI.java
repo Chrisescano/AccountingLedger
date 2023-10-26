@@ -11,6 +11,7 @@ public class AppCLI {
 
     public static void main(String[] args) {
         new Sorter(ledger.getMasterCopy());
+        new LedgerStats(ledger.getMasterCopy());
 
         ledger.init();
         ledger.load();
@@ -48,12 +49,12 @@ public class AppCLI {
                 }
                 case 'D' -> {
                     Terminal.printColor("green", "\nFetching All Ledger Deposits...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByTransactionType(true);
+                    ArrayList<Transaction> sortedLedger = Sorter.byTransactionType(true);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'P' -> {
                     Terminal.printColor("green", "\nFetching all Ledger Payments...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByTransactionType(false);
+                    ArrayList<Transaction> sortedLedger = Sorter.byTransactionType(false);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 'R' -> reportsScreenPrompt();
@@ -70,22 +71,22 @@ public class AppCLI {
             switch (command) {
                 case 1 -> {
                     Terminal.printColor("green", "\nFiltering From Month to Date...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByDate(LocalDateTime.now(), true);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), true);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 2 -> {
                     Terminal.printColor("green", "\nFiltering Last Month's Transactions...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByDate(LocalDateTime.now(), true);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), true);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 3 -> {
                     Terminal.printColor("green", "\nFiltering From Year to Date...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByDate(LocalDateTime.now(), false);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), false);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 4 -> {
                     Terminal.printColor("green", "\nFiltering Last Year's Transactions...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.filterByDate(LocalDateTime.now(), false);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), false);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 5 -> {

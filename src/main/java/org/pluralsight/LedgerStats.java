@@ -13,20 +13,29 @@ public class LedgerStats {
         this.ledger = ledger;
     }
 
-    public static void totalBalance() {
-        double sum = 0;
-        for(Transaction transaction : ledger) { sum += transaction.amount(); }
+    public static double[] monthlySummary(LocalDateTime date) {
+        ArrayList<Transaction> filteredLedger = Sorter.byDate(date, true);
+        return  calculateBalances(filteredLedger);
     }
 
-    //we can loop for all months of the year, and ask the user for the year and month
-//    public static void monthlySummary(int year, int month) {
-//        LocalDate[] dateRange = TimeManager.getStartAndEndOfMonth(year, month);
-//
-//
-//    }
-//
-//    public static void yearlySummary(int year) {
-//        LocalDate[] yearRange = TimeManager.getStartAndEndOfYear(year);
-//
-//    }
+    public static double[] yearlySummary(LocalDateTime date) {
+        ArrayList<Transaction> filteredLedger = Sorter.byDate(date, false);
+        return calculateBalances(filteredLedger);
+    }
+
+    /*-----Helper Methods-----*/
+
+    private static double[] calculateBalances() {
+        return calculateBalances(ledger);
+    }
+
+    private static double[] calculateBalances(ArrayList<Transaction> ledger) {
+        double depositTotal = 0, paymentTotal = 0;
+
+        for(Transaction transaction : ledger) {
+            if(transaction.amount() > 0) depositTotal += transaction.amount();
+            else paymentTotal += transaction.amount();
+        }
+        return new double[] {depositTotal, paymentTotal, depositTotal + paymentTotal};
+    }
 }

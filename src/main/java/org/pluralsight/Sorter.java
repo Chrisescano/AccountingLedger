@@ -13,7 +13,9 @@ public class Sorter {
         this.ledger = ledger;
     }
 
-    public static ArrayList<Transaction> filterByTransactionType(boolean onlyDeposits) {
+    /*-----Filter/Sorting Methods-----*/
+
+    public static ArrayList<Transaction> byTransactionType(boolean onlyDeposits) {
         ArrayList<Transaction> filteredLedger = filter(
                 LocalDateTime.MIN, LocalDateTime.MAX, "", "", 0, onlyDeposits
         );
@@ -21,7 +23,7 @@ public class Sorter {
         return filteredLedger;
     }
 
-    public static ArrayList<Transaction> filterByDate(LocalDateTime date, boolean isMonthRange) {
+    public static ArrayList<Transaction> byDate(LocalDateTime date, boolean isMonthRange) {
         LocalDateTime[] dates = isMonthRange ? TimeManager.monthRangeOf(date) : TimeManager.yearRangeOf(date);
         ArrayList<Transaction> filteredLedger = filter(
                 dates[0], dates[1], "", "", 1, true
