@@ -9,17 +9,48 @@ import java.util.ArrayList;
 public class LedgerStats {
 
     private static ArrayList<Transaction> ledger;
+    private static String[] totalDepositColumns = {"Deposit","Payments","Total"};
+    private static String[] incomeToDebtColumns = {"Income To Debt Ratio"};
+    private static String[] monthSummaryColumns = {"Month","Deposit","Payments","Total"};
+    private static String[] yearSummaryColumns = {"Year","Deposit","Payments","Total"};
 
     public LedgerStats(ArrayList<Transaction> ledger) {
         this.ledger = ledger;
     }
 
     public static void main(String[] args) {
-        double a = 5;
-        double b = 10;
+        LedgerStats.displayTableHeader(new String[]{"hello","world"});
 
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        System.out.println(decimalFormat.format((a / b) * 100));
+    }
+
+    /*-----Display Methods-----*/
+
+    public static void displayTableHeader(String[] columnTitles) {
+        //makes the table divider based on length of columnTitles
+        String tableDivider = "";
+        for(int i = 0; i < columnTitles.length; i++) {
+            tableDivider += "+" + "-".repeat(21);
+        }
+        tableDivider += "+";
+
+        //creates formatting for different columns
+        String[] columnFormats = new String[columnTitles.length];
+        for(int i = 0; i < columnTitles.length; i++) {
+            //columnFormats[i] = "| %-" + columnTitles[i].length() + "s ";
+            columnFormats[i] = "| %-20s";
+        }
+        columnFormats[columnFormats.length-1] += "|";
+
+        //builds formatted string
+        String formattedColumns = "";
+        for(int i = 0; i < columnTitles.length; i++) {
+            formattedColumns += String.format(columnFormats[i], columnTitles[i]);
+        }
+
+        //print everything out
+        System.out.println(tableDivider);
+        System.out.println(formattedColumns);
+        System.out.println(tableDivider);
     }
 
     /*-----Methods-----*/

@@ -33,7 +33,7 @@ public class AppCLI {
                     System.out.println("Thank you for visiting. Please come again!");
                     return;
                 }
-                default -> System.out.println("Sorry, that is not a valid command. Please try again");
+                default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
     }
