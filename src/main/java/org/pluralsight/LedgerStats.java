@@ -1,5 +1,6 @@
 package org.pluralsight;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,6 +12,14 @@ public class LedgerStats {
 
     public LedgerStats(ArrayList<Transaction> ledger) {
         this.ledger = ledger;
+    }
+
+    public static void main(String[] args) {
+        double a = 5;
+        double b = 10;
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        System.out.println(decimalFormat.format((a / b) * 100));
     }
 
     /*-----Methods-----*/
@@ -36,6 +45,11 @@ public class LedgerStats {
             detailed[i][2] = balancesForThatMonth[2];
         }
         return detailed;
+    }
+
+    private static double debtToIncomeRatio() {
+        double[] balances = calculateBalances();
+        return (balances[1] / balances[0]) * 100;
     }
 
     /*-----Helper Methods-----*/
