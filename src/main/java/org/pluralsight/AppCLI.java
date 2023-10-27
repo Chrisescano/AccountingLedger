@@ -79,7 +79,7 @@ public class AppCLI {
                 }
                 case 2 -> {
                     Terminal.printColor("green", "\nFiltering Last Month's Transactions...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), true);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now().minusMonths(1), true);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 3 -> {
@@ -89,7 +89,7 @@ public class AppCLI {
                 }
                 case 4 -> {
                     Terminal.printColor("green", "\nFiltering Last Year's Transactions...\n");
-                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now(), false);
+                    ArrayList<Transaction> sortedLedger = Sorter.byDate(LocalDateTime.now().minusYears(1), false);
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 5 -> {
