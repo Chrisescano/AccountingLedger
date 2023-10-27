@@ -93,7 +93,7 @@ public class AppCLI {
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 5 -> {
-                    String vendorInput = promptStringInput("Search by vendor: ");
+                    String vendorInput = promptStringInput("Search by vendor: ", false);
                     Terminal.printColor("green", "\nFiltering for ");
                     Terminal.printColor("", vendorInput);
                     Terminal.printColor("green", " vendors...\n");
@@ -146,13 +146,16 @@ public class AppCLI {
                 LocalDate.now());
         LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ",
                 LocalTime.now());
-        String descriptionInput = promptStringInput("Details (what was it for): ");
-        String vendorInput = promptStringInput("Pay to: ");
+        String descriptionInput = promptStringInput("Details (what was it for): ", false);
+        String vendorInput = promptStringInput("Pay to: ", false);
         double amountInput = promptDoubleInput("Amount: ");
 
         LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
         if (isDeposit && amountInput < 0) amountInput *= 1;
         if (!isDeposit && amountInput > 0) amountInput *= -1;
+
+        //cant have blank transactions
+
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         ledger.save();
@@ -164,8 +167,8 @@ public class AppCLI {
 
         LocalDateTime startDate = promptDateInput("Search by start date: ", LocalDate.MIN).atTime(LocalTime.MIN);
         LocalDateTime endDate = promptDateInput("Search by end date: ", LocalDate.MAX).atTime(LocalTime.MAX);
-        String description = promptStringInput("Search by description: ");
-        String vendor = promptStringInput("Search by vendor: ");
+        String description = promptStringInput("Search by description: ", true);
+        String vendor = promptStringInput("Search by vendor: ", true);
         double amount = promptDoubleInput("Search by amount: ", 0);
 
         ArrayList<Transaction> sortedLedger = Sorter.byCustomSearch(startDate, endDate, description, vendor, amount);
@@ -174,9 +177,14 @@ public class AppCLI {
 
     /*-----User prompt and input methods-----*/
 
-    public static String promptStringInput(String prompt) {
-        Terminal.printColor("yellow", prompt);
-        return ImprovedIO.getLineOfInput();
+    public static String promptStringInput(String prompt, boolean canBeEmpty) {
+        String userInput = "";
+        do {
+            Terminal.printColor("yellow", prompt);
+            userInput = ImprovedIO.getLineOfInput();
+            if (!userInput.equals("")) canBeEmpty = true;
+        } while (!canBeEmpty);
+        return userInput;
     }
 
     public static double promptDoubleInput(String prompt) {
