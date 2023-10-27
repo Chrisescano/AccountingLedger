@@ -19,6 +19,9 @@ public class LedgerStats {
 
     public static void displayDetailedYearly(LocalDateTime date) {
         double[][] detailedSummary = detailedYearlySummary(date);
+
+        System.out.println();
+        Terminal.printColor("green", "Preparing your Detailed Yearly Report...\n");
         System.out.print("""
                     +--------------------+--------------------+--------------------+--------------------+
                     | Month              | Deposits           | Payments           | Total              |
@@ -39,7 +42,10 @@ public class LedgerStats {
         String firstColumn = isMonthlySummary ?
                 date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) :
                 String.valueOf(date.getYear());
+        String terminalDisplayMsg = isMonthlySummary ? "Preparing your Monthly Summary...\n" : "Preparing your Yearly Summary...\n";
+
         System.out.println();
+        Terminal.printColor("green", terminalDisplayMsg);
         if(isMonthlySummary) {
             System.out.print("""
                     +--------------------+--------------------+--------------------+--------------------+
@@ -62,6 +68,7 @@ public class LedgerStats {
     public static void displayTotalDeposits() {
         double[] totalBalance = calculateBalances();
         System.out.println();
+        Terminal.printColor("green", "Calculating your ledger balance...\n");
         System.out.print("""
                 +--------------------+--------------------+--------------------+
                 | Deposits           | Payments           | Total              |
@@ -75,6 +82,7 @@ public class LedgerStats {
 
     public static void displayIncomeToDebtTable() {
         System.out.println();
+        Terminal.printColor("green","Calculating Income to Debt Ratio...\n");
         System.out.print("""
                 +--------------------+
                 | Ratio              |

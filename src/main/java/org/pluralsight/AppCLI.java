@@ -147,7 +147,7 @@ public class AppCLI {
         LocalTime timeInput = promptTimeInput("Time in HH-MM-SS format (enter key = current time): ",
                 LocalTime.now());
         String descriptionInput = promptStringInput("Details (what was it for): ", false);
-        String vendorInput = promptStringInput("Pay to: ", false);
+        String vendorInput = promptStringInput("Vendor: ", false);
         double amountInput = promptDoubleInput("Amount: ");
 
         LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
