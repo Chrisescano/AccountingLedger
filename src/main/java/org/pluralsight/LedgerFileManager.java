@@ -26,9 +26,15 @@ public class LedgerFileManager {
         return fileContents.split("\n");
     }
 
-    public void saveToFile(ArrayList<Transaction> ledger) {
-        String[] fileContents = getLedgerAsCVSArray(ledger);
-        writeToFile(fileContents);
+// not implemented but is a useful function to overwrite the file in a way
+//    public void saveToFile(ArrayList<Transaction> ledger) {
+//        String[] fileContents = getLedgerAsCVSArray(ledger);
+//        writeToFile(fileContents);
+//    }
+
+    public void saveToFile(Transaction transaction) {
+        String[] fileLine = {transaction.toCSVFormat()};
+        writeToFile(fileLine);
     }
 
     public void makeFile() {

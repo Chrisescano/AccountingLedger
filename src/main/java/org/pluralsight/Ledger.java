@@ -45,7 +45,7 @@ public class Ledger {
     }
 
     public void save() {
-        fileManager.saveToFile(masterCopy);
+        fileManager.saveToFile(masterCopy.get(masterCopy.size() - 1));
     }
 
     public void load() {
