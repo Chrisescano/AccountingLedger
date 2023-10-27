@@ -57,6 +57,7 @@ public class LedgerFileManager {
             while ((fileLine = bufferedReader.readLine()) != null) {
                 file = file.concat(fileLine + "\n");
             }
+            bufferedReader.close();
         } catch(IOException e) {
             System.out.println("Oops, looks like I could not read from the file: " + fileName);
             e.printStackTrace();
