@@ -32,3 +32,6 @@ The Statistic Screen was an additional feature that feels useful. It can calcula
 The images folder of the project repository contains pictures of the different Statistic Screen options as the program runs.
 
 ## Interesting Pieces of Code
+![Terminal Class](images/terminal_class.png)
+
+An interesting piece of code was the Terminal class. This classes job was to use the terminal escape codes to change text to different colors. By putting the codes in an Enum and then creating static helper methods the class was modular and could print to the terminal in many colors. The images shows an example of this as it can print a menu in color and customize different parts of it.
