@@ -50,6 +50,8 @@ public class Sorter {
 
     /*-----Filtering Method-----*/
 
+    // setting the amount and searchByDeposit boolean is very important
+    // to skip this filtering set amount != 0 and boolean to true
     public static ArrayList<Transaction> filter(LocalDateTime startDateTime, LocalDateTime endDateTime, String description,
                                                 String vendor, double amount, boolean searchByDeposit) {
         ArrayList<Transaction> filteredLedger = new ArrayList<>(ledger);
