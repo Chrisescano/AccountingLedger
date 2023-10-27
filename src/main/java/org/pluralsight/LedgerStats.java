@@ -1,6 +1,5 @@
 package org.pluralsight;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,18 +10,9 @@ import java.util.Locale;
 public class LedgerStats {
 
     private static ArrayList<Transaction> ledger;
-    private static String[] totalDepositColumns = {"Deposit","Payments","Total"};
-    private static String[] incomeToDebtColumns = {"Income To Debt Ratio"};
-    private static String[] monthSummaryColumns = {"Month","Deposit","Payments","Total"};
-    private static String[] yearSummaryColumns = {"Year","Deposit","Payments","Total"};
 
     public LedgerStats(ArrayList<Transaction> ledger) {
-        this.ledger = ledger;
-    }
-
-    public static void main(String[] args) {
-
-
+        LedgerStats.ledger = ledger;
     }
 
     /*-----Display Methods-----*/
@@ -35,11 +25,11 @@ public class LedgerStats {
                     +--------------------+--------------------+--------------------+--------------------+
                     """);
         for(int i = 0; i < detailedSummary.length; i++) {
-            System.out.println(String.format(
-                    "| %-18s | $%17.2f | $%17.2f | $%17.2f |",
+            System.out.printf(
+                    "| %-18s | $%17.2f | $%17.2f | $%17.2f |%n",
                     LocalDate.of(date.getYear(), i + 1, 1).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH),
                     detailedSummary[i][0], detailedSummary[i][1], detailedSummary[i][2]
-            ));
+            );
             System.out.println("+--------------------+--------------------+--------------------+--------------------+");
         }
     }
@@ -63,9 +53,9 @@ public class LedgerStats {
                     +--------------------+--------------------+--------------------+--------------------+
                     """);
         }
-        System.out.println(String.format(
-                "| %-18s | $%17.2f | $%17.2f | $%17.2f |", firstColumn, summary[0], summary[1], summary[2]
-        ));
+        System.out.printf(
+                "| %-18s | $%17.2f | $%17.2f | $%17.2f |%n", firstColumn, summary[0], summary[1], summary[2]
+        );
         System.out.println("+--------------------+--------------------+--------------------+--------------------+");
     }
 
@@ -77,9 +67,9 @@ public class LedgerStats {
                 | Deposits           | Payments           | Total              |
                 +--------------------+--------------------+--------------------+
                 """);
-        System.out.println(String.format(
-                "| $%17.2f | $%17.2f | $%17.2f |", totalBalance[0],totalBalance[1],totalBalance[2]
-        ));
+        System.out.printf(
+                "| $%17.2f | $%17.2f | $%17.2f |%n", totalBalance[0],totalBalance[1],totalBalance[2]
+        );
         System.out.println("+--------------------+--------------------+--------------------+");
     }
 
@@ -90,9 +80,9 @@ public class LedgerStats {
                 | Ratio              |
                 +--------------------+
                 """);
-        System.out.println(String.format(
-                "| %%%17.2f |", debtToIncomeRatio() //need to use % to escape a %
-        ));
+        System.out.printf(
+                "| %%%17.2f |%n", debtToIncomeRatio() //need to use % to escape a %
+        );
         System.out.println("+--------------------+");
     }
 

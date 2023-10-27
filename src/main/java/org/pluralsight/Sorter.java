@@ -10,7 +10,7 @@ public class Sorter {
     private static ArrayList<Transaction> ledger;
 
     public Sorter(ArrayList<Transaction> ledger) {
-        this.ledger = ledger;
+        Sorter.ledger = ledger;
     }
 
     /*-----Filter/Sorting Methods-----*/
@@ -42,7 +42,7 @@ public class Sorter {
 
     public static ArrayList<Transaction> byCustomSearch(LocalDateTime startDate, LocalDateTime endDate,
             String description, String vendor, double amount) {
-        boolean flag = amount == 0 ? true : false; //if amount is 0 then set to true to skip filtering by amount, deposits, or payments
+        boolean flag = amount == 0; //if amount is 0 then set to true to skip filtering by amount, deposits, or payments
         ArrayList<Transaction> filteredLedger = filter(startDate, endDate, description, vendor, amount, flag);
         sortAlphabetically(filteredLedger);
         return filteredLedger;

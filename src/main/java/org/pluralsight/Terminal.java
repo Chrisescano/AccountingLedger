@@ -76,8 +76,7 @@ public class Terminal {
     }
 
     public static String wrapString(String color, String message) {
-        String colorString = toANSICode(color) + message + ANSI.RESET.terminalCode;
-        return colorString;
+        return toANSICode(color) + message + ANSI.RESET.terminalCode;
     }
 
     /*-----Private ENUM class----*/

@@ -104,11 +104,11 @@ public class Ledger {
                 Terminal.wrapString(tableHeaderColor, "%-15s"));
         String amountHeaderFormat = Terminal.wrapString("bold",
                 Terminal.wrapString(tableHeaderColor, "%-11s"));
-        System.out.println(String.format(
+        System.out.printf(
                 "| " + dateHeaderFormat + " @ " + timeHeaderFormat + " | " + descriptionHeaderFormat +
-                " | " + vendorHeaderFormat + " | " + amountHeaderFormat + " |",
+                " | " + vendorHeaderFormat + " | " + amountHeaderFormat + " |%n",
                 "Date","Time","Description","Vendor","Price"
-        ));
+        );
         System.out.println(tableDivider);
     }
 
