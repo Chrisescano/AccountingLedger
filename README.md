@@ -35,3 +35,8 @@ The images folder of the project repository contains pictures of the different S
 ![Terminal Class](images/terminal_class.png)
 
 An interesting piece of code was the Terminal class. This classes job was to use the terminal escape codes to change text to different colors. By putting the codes in an Enum and then creating static helper methods the class was modular and could print to the terminal in many colors. The images shows an example of this as it can print a menu in color and customize different parts of it.
+
+## Simplified Class Diagram
+![Class Diagram](images/simplified_class_diagram.png)
+
+A simplified class diagram that shows the relationships between classes
