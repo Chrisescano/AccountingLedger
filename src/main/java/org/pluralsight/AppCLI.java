@@ -110,11 +110,20 @@ public class AppCLI {
             Terminal.printStatsMenu("blue", "cyan", "");
             int command = ImprovedIO.getIntInput();
             switch (command) {
-                case 1 -> System.out.println("Get total balance");
-                case 2 -> System.out.println("get monthly summary");
-                case 3 -> System.out.println("get yearly summary");
-                case 4 -> System.out.println("get detailed yearly summary");
-                case 5 -> System.out.println("get debt to income ratio");
+                case 1 -> LedgerStats.displayTotalDeposits();
+                case 2 -> {
+                    LocalDate date = promptDateInput("Enter the date in YYYY-MM-DD form: ", LocalDate.now());
+                    LedgerStats.displaySummaryColumns(date.atTime(LocalTime.MIN), true);
+                }
+                case 3 -> {
+                    LocalDate date = promptDateInput("Enter the date in YYYY-MM-DD form: ", LocalDate.now());
+                    LedgerStats.displaySummaryColumns(date.atTime(LocalTime.MIN), false);
+                }
+                case 4 -> {
+                    LocalDate date = promptDateInput("Enter the date in YYYY-MM-DD form: ", LocalDate.now());
+                    LedgerStats.displayDetailedYearly(date.atTime(LocalTime.MIN));
+                }
+                case 5 -> LedgerStats.displayIncomeToDebtTable();
                 case 6 -> { return; }
                 default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }

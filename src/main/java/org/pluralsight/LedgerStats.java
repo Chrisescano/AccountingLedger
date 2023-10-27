@@ -4,7 +4,9 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class LedgerStats {
 
@@ -19,38 +21,79 @@ public class LedgerStats {
     }
 
     public static void main(String[] args) {
-        LedgerStats.displayTableHeader(new String[]{"hello","world"});
+
 
     }
 
     /*-----Display Methods-----*/
 
-    public static void displayTableHeader(String[] columnTitles) {
-        //makes the table divider based on length of columnTitles
-        String tableDivider = "";
-        for(int i = 0; i < columnTitles.length; i++) {
-            tableDivider += "+" + "-".repeat(21);
+    public static void displayDetailedYearly(LocalDateTime date) {
+        double[][] detailedSummary = detailedYearlySummary(date);
+        System.out.print("""
+                    +--------------------+--------------------+--------------------+--------------------+
+                    | Month              | Deposits           | Payments           | Total              |
+                    +--------------------+--------------------+--------------------+--------------------+
+                    """);
+        for(int i = 0; i < detailedSummary.length; i++) {
+            System.out.println(String.format(
+                    "| %-18s | $%17.2f | $%17.2f | $%17.2f |",
+                    LocalDate.of(date.getYear(), i + 1, 1).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH),
+                    detailedSummary[i][0], detailedSummary[i][1], detailedSummary[i][2]
+            ));
+            System.out.println("+--------------------+--------------------+--------------------+--------------------+");
         }
-        tableDivider += "+";
+    }
 
-        //creates formatting for different columns
-        String[] columnFormats = new String[columnTitles.length];
-        for(int i = 0; i < columnTitles.length; i++) {
-            //columnFormats[i] = "| %-" + columnTitles[i].length() + "s ";
-            columnFormats[i] = "| %-20s";
+    public static void displaySummaryColumns(LocalDateTime date ,boolean isMonthlySummary) {
+        double[] summary = isMonthlySummary ? monthlySummary(date) : yearlySummary(date);
+        String firstColumn = isMonthlySummary ?
+                date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) :
+                String.valueOf(date.getYear());
+        System.out.println();
+        if(isMonthlySummary) {
+            System.out.print("""
+                    +--------------------+--------------------+--------------------+--------------------+
+                    | Month              | Deposits           | Payments           | Total              |
+                    +--------------------+--------------------+--------------------+--------------------+
+                    """);
+        } else {
+            System.out.print("""
+                    +--------------------+--------------------+--------------------+--------------------+
+                    | Year               | Deposits           | Payments           | Total              |
+                    +--------------------+--------------------+--------------------+--------------------+
+                    """);
         }
-        columnFormats[columnFormats.length-1] += "|";
+        System.out.println(String.format(
+                "| %-18s | $%17.2f | $%17.2f | $%17.2f |", firstColumn, summary[0], summary[1], summary[2]
+        ));
+        System.out.println("+--------------------+--------------------+--------------------+--------------------+");
+    }
 
-        //builds formatted string
-        String formattedColumns = "";
-        for(int i = 0; i < columnTitles.length; i++) {
-            formattedColumns += String.format(columnFormats[i], columnTitles[i]);
-        }
+    public static void displayTotalDeposits() {
+        double[] totalBalance = calculateBalances();
+        System.out.println();
+        System.out.print("""
+                +--------------------+--------------------+--------------------+
+                | Deposits           | Payments           | Total              |
+                +--------------------+--------------------+--------------------+
+                """);
+        System.out.println(String.format(
+                "| $%17.2f | $%17.2f | $%17.2f |", totalBalance[0],totalBalance[1],totalBalance[2]
+        ));
+        System.out.println("+--------------------+--------------------+--------------------+");
+    }
 
-        //print everything out
-        System.out.println(tableDivider);
-        System.out.println(formattedColumns);
-        System.out.println(tableDivider);
+    public static void displayIncomeToDebtTable() {
+        System.out.println();
+        System.out.print("""
+                +--------------------+
+                | Ratio              |
+                +--------------------+
+                """);
+        System.out.println(String.format(
+                "| %%%17.2f |", debtToIncomeRatio() //need to use % to escape a %
+        ));
+        System.out.println("+--------------------+");
     }
 
     /*-----Methods-----*/
@@ -80,7 +123,7 @@ public class LedgerStats {
 
     private static double debtToIncomeRatio() {
         double[] balances = calculateBalances();
-        return (balances[1] / balances[0]) * 100;
+        return ((balances[1] * -1) / balances[0]) * 100;
     }
 
     /*-----Helper Methods-----*/
