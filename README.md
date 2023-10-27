@@ -7,3 +7,4 @@ functionality in terms of displaying, filtering, sorting, and statistics.
 There are four core screens, along with some sub-screens.
 
 ### Core Menu - Main Screen
+![Home Screen](images/home_screen.png)
