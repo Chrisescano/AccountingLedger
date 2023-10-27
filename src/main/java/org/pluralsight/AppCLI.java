@@ -22,7 +22,7 @@ public class AppCLI {
     /*-----Main Command Menus-----*/
 
     public static void homeScreenPrompt() {
-        while(true) {
+        while (true) {
             Terminal.printHomeMenu("BLUE", "CYAN", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
@@ -39,7 +39,7 @@ public class AppCLI {
     }
 
     public static void ledgerScreenPrompt() {
-        while(true) {
+        while (true) {
             Terminal.printLedgerMenu("blue", "cyan", "");
             char command = ImprovedIO.getCharInput();
             switch (command) {
@@ -59,14 +59,16 @@ public class AppCLI {
                 }
                 case 'R' -> reportsScreenPrompt();
                 case 'S' -> statsScreenPrompt();
-                case 'H' -> {return;}
+                case 'H' -> {
+                    return;
+                }
                 default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
     }
 
     public static void reportsScreenPrompt() {
-        while(true) {
+        while (true) {
             Terminal.printReportMenu("blue", "cyan", "");
             int command = ImprovedIO.getIntInput();
             switch (command) {
@@ -99,14 +101,16 @@ public class AppCLI {
                     ledger.displayAsTable(sortedLedger);
                 }
                 case 6 -> customSearch();
-                case 0 -> {return;}
+                case 0 -> {
+                    return;
+                }
                 default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
     }
 
     public static void statsScreenPrompt() {
-        while(true) {
+        while (true) {
             Terminal.printStatsMenu("blue", "cyan", "");
             int command = ImprovedIO.getIntInput();
             switch (command) {
@@ -124,7 +128,9 @@ public class AppCLI {
                     LedgerStats.displayDetailedYearly(date.atTime(LocalTime.MIN));
                 }
                 case 5 -> LedgerStats.displayIncomeToDebtTable();
-                case 6 -> { return; }
+                case 6 -> {
+                    return;
+                }
                 default -> Terminal.printColor("red", "Sorry, that is not a valid command. Please try again\n");
             }
         }
@@ -134,7 +140,7 @@ public class AppCLI {
 
     public static void makeTransaction(boolean isDeposit) {
         String screenTitle = isDeposit ? "Deposit Screen" : "Payment Screen";
-        Terminal.printColor("blue", "\n==========[ "+ screenTitle + " ]==========\n");
+        Terminal.printColor("blue", "\n==========[ " + screenTitle + " ]==========\n");
 
         LocalDate dateInput = promptDateInput("Date in YYYY-MM-DD format (enter key = today's date): ",
                 LocalDate.now());
@@ -145,8 +151,8 @@ public class AppCLI {
         double amountInput = promptDoubleInput("Amount: ");
 
         LocalDateTime postTimeStamp = dateInput.atTime(timeInput);
-        if(isDeposit && amountInput < 0) amountInput *= 1;
-        if(!isDeposit && amountInput > 0) amountInput *= -1;
+        if (isDeposit && amountInput < 0) amountInput *= 1;
+        if (!isDeposit && amountInput > 0) amountInput *= -1;
 
         ledger.postToLedger(postTimeStamp, descriptionInput, vendorInput, amountInput);
         ledger.save();
@@ -181,21 +187,31 @@ public class AppCLI {
     public static double promptDoubleInput(String prompt, double defaultDouble) {
         Terminal.printColor("yellow", prompt);
         String userDoubleInput = ImprovedIO.getLineOfInput();
-        if(userDoubleInput.equals("")) return defaultDouble;
+        if (userDoubleInput.equals("")) return defaultDouble;
         return ImprovedIO.getDoubleInput();
     }
 
     public static LocalDate promptDateInput(String prompt, LocalDate defaultDate) {
         Terminal.printColor("yellow", prompt);
-        String userDateInput = ImprovedIO.getLineOfInput();
-        if(userDateInput.equals("")) return defaultDate;
-        return ImprovedIO.getDateInput(userDateInput);
+
+        LocalDate dateInput = null;
+        while (dateInput == null) {
+            String userDateInput = ImprovedIO.getLineOfInput();
+            if (userDateInput.equals("")) return defaultDate;
+            dateInput = ImprovedIO.getDateInput(userDateInput);
+        }
+        return dateInput;
     }
 
     public static LocalTime promptTimeInput(String prompt, LocalTime defaultTime) {
         Terminal.printColor("yellow", prompt);
-        String userTimeInput = ImprovedIO.getLineOfInput();
-        if(userTimeInput.equals("")) return defaultTime;
-        return ImprovedIO.getTimeInput(userTimeInput);
+
+        LocalTime timeInput = null;
+        while (timeInput == null) {
+            String userTimeInput = ImprovedIO.getLineOfInput();
+            if (userTimeInput.equals("")) return defaultTime;
+            timeInput = ImprovedIO.getTimeInput(userTimeInput);
+        }
+        return timeInput;
     }
 }
